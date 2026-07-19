@@ -4,142 +4,151 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IRRAREBOY // Space Upgrade</title>
+  <!-- Подключаем точечный шрифт в стиле Nothing / винтажных табло -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <style>
-    /* Базовые настройки и футуристичный темный фон */
     body {
       margin: 0;
       padding: 40px 20px;
-      background-color: #0a0a0e;
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(26, 21, 44, 0.5) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(10, 35, 36, 0.4) 0px, transparent 50%);
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      color: #e2e2e9;
+      /* Теплый, слегка винтажный кремово-серый фон (вайб mid-century) */
+      background-color: #f4f3ef;
+      background-image: radial-gradient(#dbdad5 1px, transparent 1px);
+      background-size: 24px 24px;
+      font-family: 'Space Grotesk', sans-serif;
+      color: #1c1c1e;
       display: flex;
       justify-content: center;
       min-height: 100vh;
       box-sizing: border-box;
     }
 
-    /* Контейнер витрины */
     .container {
       width: 100%;
-      max-width: 540px;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    /* Шапка в стиле Nothing / Ретро-поп-ап */
+    .header {
+      text-align: center;
+      padding: 10px 0;
+      animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .header h1 {
+      /* Точечный Nothing-шрифт */
+      font-family: 'VT323', monospace;
+      font-size: 48px;
+      line-height: 1;
+      font-weight: normal;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #000000;
+      margin: 0 0 12px 0;
+    }
+
+    /* Красная акцентная точка — фирменный знак Nothing */
+    .header h1::after {
+      content: "●";
+      color: #ff3b30;
+      font-size: 24px;
+      margin-left: 4px;
+      vertical-align: super;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: #636366;
+      margin: 0;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .grid {
       display: flex;
       flex-direction: column;
       gap: 24px;
     }
 
-    /* Шапка профиля с плавной анимацией появления */
-    .header {
-      text-align: center;
-      padding: 20px 0;
-      animation: fadeInDown 0.8s ease-out;
-    }
-
-    .header h1 {
-      font-size: 26px;
-      font-weight: 700;
-      letter-spacing: 3px;
-      color: #00ffcc;
-      margin: 0 0 8px 0;
-      text-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
-    }
-
-    .header p {
-      font-size: 14px;
-      color: #8a8a9e;
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    /* Сетка для карточек-плиток */
-    .grid {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    /* Интерактивная карточка (плитка) */
+    /* Карточка: смесь формы mid-century и прозрачности Nothing */
     .card {
       text-decoration: none;
       color: inherit;
-      background: rgba(20, 20, 28, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(12px);
-      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.7);
+      /* Фирменный тонкий кант Nothing */
+      border: 1px solid #e5e5ea;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      /* Скругление углов в стиле мебели 60-х */
+      border-radius: 24px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      /* Плавный переход для всех анимаций */
-      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      
+      /* Упругая POP-UP анимация (выпрыгивание) */
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                  box-shadow 0.4s ease, 
+                  border-color 0.3s ease;
+      
       cursor: pointer;
-      position: relative;
-      /* Анимация проявления при загрузке страницы */
-      animation: fadeInUp 0.8s ease-out both;
+      animation: popUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
     }
 
-    /* Разные задержки появления для эффекта очереди */
-    .card:nth-child(1) { animation-delay: 0.2s; }
-    .card:nth-child(2) { animation-delay: 0.4s; }
-    .card:nth-child(3) { animation-delay: 0.6s; }
+    .card:nth-child(1) { animation-delay: 0.1s; }
+    .card:nth-child(2) { animation-delay: 0.2s; }
 
-    /* Эффекты при наведении (Ховер-анимация) */
+    /* Эффект при наведении — карточка "выпрыгивает" на пользователя */
     .card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(0, 255, 204, 0.3);
-      box-shadow: 0 12px 30px rgba(0, 255, 204, 0.1);
-      background: rgba(25, 25, 35, 0.8);
+      transform: translateY(-8px) scale(1.02);
+      border-color: #000000;
+      box-shadow: 0 20px 32px rgba(0, 0, 0, 0.08);
     }
 
-    /* Контейнер для картинки, чтобы контролировать зум */
     .image-container {
       width: 100%;
-      height: 200px;
+      height: 220px;
       overflow: hidden;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: #eaeaea;
       position: relative;
     }
 
-    /* Картинка (твоя 3D модель) */
     .card-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+      transition: transform 0.5s ease;
     }
 
-    /* Анимация зума картинки при наведении на карточку */
+    /* Мягкий зум картинки */
     .card:hover .card-img {
-      transform: scale(1.05);
+      transform: scale(1.03);
     }
 
-    /* Контент внутри карточки */
     .card-content {
-      padding: 20px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .card-title {
-      font-weight: 600;
-      font-size: 18px;
-      color: #ffffff;
+      font-weight: 700;
+      font-size: 19px;
+      color: #000000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: color 0.3s;
-    }
-
-    /* Подсветка текста при наведении */
-    .card:hover .card-title {
-      color: #00ffcc;
     }
 
     .card-description {
-      font-size: 13px;
-      color: #8a8a9e;
+      font-size: 14px;
+      color: #636366;
       line-height: 1.5;
     }
 
@@ -147,42 +156,45 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 8px;
-      font-size: 14px;
+      margin-top: 10px;
     }
 
+    /* Ценник в стиле минимализма Nothing */
     .card-price {
       font-weight: 700;
-      color: #00ffcc;
-      background: rgba(0, 255, 204, 0.1);
-      padding: 4px 10px;
-      border-radius: 20px;
-      border: 1px solid rgba(0, 255, 204, 0.2);
+      font-size: 14px;
+      color: #000000;
+      background: #ffffff;
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid #e5e5ea;
     }
 
+    .card:hover .card-price {
+      background: #000000;
+      color: #ffffff;
+      border-color: #000000;
+    }
+
+    /* Стрелочка, которая сдвигается при наведении */
     .card-action {
-      font-size: 12px;
-      color: #8a8a9e;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 500;
+      color: #000000;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
+      transition: gap 0.2s ease;
     }
 
     .card:hover .card-action {
-      color: #ffffff;
+      gap: 10px;
     }
 
-    /* Ключевые кадры для анимаций */
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Анимация Pop-Up */
+    @keyframes popUp {
+      from { transform: translateY(40px) scale(0.92); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
     }
   </style>
 </head>
@@ -190,27 +202,25 @@
 
   <div class="container">
     
-    <!-- Шапка страницы -->
     <div class="header">
       <h1>IRRAREBOY</h1>
-      <p>Building my creative space layer by layer.<br>Click any 3D object to support the next physical upgrade.</p>
+      <p>Analog soul, digital space. Click on any custom 3D concept layer to fuel the setup upgrade.</p>
     </div>
 
-    <!-- Сетка с целями -->
     <div class="grid">
       
       <!-- Карточка 1 -->
       <a href="ССЫЛКА_НА_TRIBUTE_1" target="_blank" class="card">
         <div class="image-container">
-          <!-- Сюда вставим ссылку на рендер из SketchUp -->
-          <img src="https://images.unsplash.com/photo-1546435770-a3e426bf472b?q=80&w=600&auto=format&fit=crop" alt="Audio Upgrade" class="card-img">
+          <!-- Заглушка: яркие аналоговые/гавайские вайбы для теста -->
+          <img src="https://images.unsplash.com/photo-1520256866875-9b48b945148c?q=80&w=600&auto=format&fit=crop" alt="Audio Hardware" class="card-img">
         </div>
         <div class="card-content">
-          <div class="card-title">Audio Upgrade 🎧</div>
-          <div class="card-description">Studio-quality monitoring headphones to level up the sound design and stream audio clarity.</div>
+          <div class="card-title">Acoustic Layer 🎧</div>
+          <div class="card-description">Integrating vintage open-back monitoring architecture with clean, transparent textures for the ultimate desktop soundscape.</div>
           <div class="card-footer">
             <span class="card-price">€150</span>
-            <span class="card-action">Support Goal &rarr;</span>
+            <span class="card-action">Order layer &rarr;</span>
           </div>
         </div>
       </a>
@@ -218,14 +228,15 @@
       <!-- Карточка 2 -->
       <a href="ССЫЛКА_НА_TRIBUTE_2" target="_blank" class="card">
         <div class="image-container">
-          <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=600&auto=format&fit=crop" alt="Ambient Light" class="card-img">
+          <!-- Заглушка: винтажная эстетика тепла -->
+          <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop" alt="Ambient Element" class="card-img">
         </div>
         <div class="card-content">
-          <div class="card-title">Atmosphere Light 🔮</div>
-          <div class="card-description">Custom dynamic background illumination to set the perfect cyber-neon mood during live sessions.</div>
+          <div class="card-title">Chroma Light 🔮</div>
+          <div class="card-description">Warm mid-century ambient glow meeting diffused hardware aesthetics to re-engineer the streaming backdrop mood.</div>
           <div class="card-footer">
             <span class="card-price">€60</span>
-            <span class="card-action">Support Goal &rarr;</span>
+            <span class="card-action">Order layer &rarr;</span>
           </div>
         </div>
       </a>
