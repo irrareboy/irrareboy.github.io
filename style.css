@@ -287,19 +287,23 @@ body {
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory; /* Магнит по вертикали */
     scroll-padding-top: 4px;
-    padding-bottom: 40px; /* Запас снизу, чтобы удобнее скроллилось */
+    padding-bottom: 20px; /* Запас снизу, чтобы удобнее скроллилось */
 
     /* Вертикальное размытие снизу (и сверху при скролле) */
     -webkit-mask-image: linear-gradient(
-      to bottom,
-      black calc(100% - 40px),
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to bottom,
-      black calc(100% - 40px),
-      transparent 100%
-    );
+    to bottom,
+    transparent 0px,
+    black 16px,
+    black calc(100% - 32px),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0px,
+    black 16px,
+    black calc(100% - 32px),
+    transparent 100%
+  );
   }
 
   .content-slider::-webkit-scrollbar {
@@ -311,7 +315,7 @@ body {
     flex-direction: column;
     gap: 16px;
     width: 100%;
-    padding: 0;
+    padding: 16px 0 16px 0;
   }
 
   /* Карточки магнитсятся к верху зоны скролла */
