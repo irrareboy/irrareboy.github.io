@@ -4,8 +4,9 @@
   padding: 0;
 }
 
+/* 1. Делаем единый фон для всей страницы */
 body {
-  background-color: #E5E5E5; /* Серый фон вокруг макета */
+  background-color: #F2F2F2; /* Цвет фона из твоего Content Grid в Figma */
   font-family: 'MuseoModerno', cursive, sans-serif;
   display: flex;
   justify-content: center;
@@ -13,14 +14,14 @@ body {
   min-height: 100vh;
 }
 
-/* Холст строго 1440x1024 */
+/* 2. Убираем белый прямоугольник и тень */
 .desktop-canvas {
   position: relative;
   width: 1440px;
   height: 1024px;
-  background: #FFFFFF;
+  background: transparent; /* Делаем холст прозрачным! */
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  /* box-shadow убираем полностью */
 }
 
 /* --- САЙДБАР --- */
