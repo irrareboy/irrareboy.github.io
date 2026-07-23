@@ -286,9 +286,10 @@ body {
     overflow-y: auto; /* Включаем вертикальный скролл */
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory; /* Магнит по вертикали */
-    scroll-padding-top: 4px;
+    scroll-padding-top: 20px;
+    scroll-padding-bottom: 20px;
     padding-bottom: 20px; /* Запас снизу, чтобы удобнее скроллилось */
-
+    
     /* Вертикальное размытие снизу (и сверху при скролле) */
     -webkit-mask-image: linear-gradient(
     to bottom,
