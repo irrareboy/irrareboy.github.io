@@ -114,7 +114,7 @@
         // Считаем коэффициент сжатия строго по высоте
         const scale = currentHeight / targetHeight;
         canvas.style.transform = `scale(${scale})`;
-        canvas.style.transformOrigin = 'center center'; // ВАЖНО: масштабируем строго из центра!
+        canvas.style.transformOrigin = 'top center'; // ВАЖНО: масштабируем строго из центра!
       } else {
         canvas.style.transform = 'none';
       }
