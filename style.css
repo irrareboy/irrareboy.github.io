@@ -190,9 +190,6 @@ body {
 @media (max-width: 1350px) {
   .content-slider {
     width: 480px; /* Расширили окно, чтобы виден был край следующей плитки */
-
-    scroll-padding-left: 24px;
-    scroll-padding-right: 24px;
     
     /* Маска со сдвигом вправо для показа «тизера» следующей карточки */
     -webkit-mask-image: linear-gradient(
