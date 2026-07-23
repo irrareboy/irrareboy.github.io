@@ -210,7 +210,7 @@ body {
 }
 
 /* --- МОБИЛЬНАЯ ВЕРСИЯ --- */
-@media (max-width: 768px) {
+@media (max-width: 995px) {
   html, body {
     height: 100%;
     overflow: hidden;
