@@ -200,7 +200,7 @@ body {
 /* --- МОБИЛЬНАЯ ВЕРСИЯ (Приложение: Зафиксированный верх + Скролл плиток) --- */
 @media (max-width: 768px) {
   html, body {
-    height: 120%;
+    height: 100%;
     overflow: hidden; /* Запрещаем скролл всей страницы */
   }
 
@@ -286,22 +286,22 @@ body {
     overflow-y: auto; /* Включаем вертикальный скролл */
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory; /* Магнит по вертикали */
-    scroll-padding-top: 20px;
-    scroll-padding-bottom: 20px;
+    scroll-padding-top: 10px;
+    scroll-padding-bottom: 10px;
     
     /* Вертикальное размытие снизу (и сверху при скролле) */
     -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0px,
-    black 16px,
-    black calc(100% - 16px),
+    black 10px,
+    black calc(100% - 10px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0px,
-    black 16px,
-    black calc(100% - 16px),
+    black 10px,
+    black calc(100% - 10px),
     transparent 100%
   );
   }
@@ -315,7 +315,7 @@ body {
     flex-direction: column;
     gap: 16px;
     width: 100%;
-    padding: 0 0;
+    padding: 16px 0 16px 0;
   }
 
   /* Карточки магнитсятся к верху зоны скролла */
