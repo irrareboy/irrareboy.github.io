@@ -288,21 +288,20 @@ body {
     scroll-snap-type: y mandatory; /* Магнит по вертикали */
     scroll-padding-top: 20px;
     scroll-padding-bottom: 20px;
-    padding-bottom: 20px; /* Запас снизу, чтобы удобнее скроллилось */
     
     /* Вертикальное размытие снизу (и сверху при скролле) */
     -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0px,
     black 16px,
-    black calc(100% - 32px),
+    black calc(100% - 16px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0px,
     black 16px,
-    black calc(100% - 32px),
+    black calc(100% - 16px),
     transparent 100%
   );
   }
