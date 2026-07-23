@@ -17,6 +17,12 @@
     
     <!-- Сайдбар -->
     <aside class="sidebar">
+      <!-- Контейнер для манекена (обрезанного по колени) -->
+      <div class="mannequin-wrapper">
+        <!-- Положи картинку манекена в папку с сайтом под именем mannequin.png -->
+        <img src="mannequin.png" alt="Mannequin" class="mannequin-img">
+      </div>
+      
       <h1 class="brand-title">IRRAREBOY<span class="dot">.</span></h1>
       
       <!-- Верхний ряд 4 маленьких кнопок -->
@@ -35,7 +41,7 @@
     </aside>
 
     <!-- Секция скролла -->
-    <section class="content-slider">
+    <section class="content-slider" id="slider">
       <div class="cards-grid">
     
         <article class="card">
@@ -74,5 +80,13 @@
 
   </main>
 
+  <script>
+  const slider = document.getElementById('slider');
+  slider.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    slider.scrollLeft += e.deltaY;
+  });
+</script>
+  
 </body>
 </html>
