@@ -81,16 +81,20 @@
   </main>
 
 <script>
-  // Ждем полной загрузки страницы
-  document.addEventListener('DOMContentLoaded', () => {
+  window.addEventListener('DOMContentLoaded', () => {
     const slider = document.querySelector('.content-slider');
-    
+
     if (slider) {
       slider.addEventListener('wheel', (e) => {
-        // Если крутим колесо по вертикали, перенаправляем в горизонтальный скролл
+        // Проверяем, что пользователь крутит колесо по вертикали
         if (e.deltaY !== 0) {
-          e.preventDefault();
-          slider.scrollLeft += e.deltaY;
+          e.preventDefault(); // Отключаем стандартный вертикальный скролл страницы
+          
+          // Двигаем слайдер по горизонтали на величину прокрутки колеса
+          slider.scrollBy({
+            left: e.deltaY * 1.5, // 1.5 — коэффициент скорости, чтобы крутилось приятно
+            behavior: 'auto'     // 'auto' дает мгновенную и точную реакцию на физическое колесо
+          });
         }
       }, { passive: false });
     }
