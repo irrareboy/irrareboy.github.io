@@ -5,7 +5,7 @@
 }
 
 body {
-  background-color: #FFFFFF; /* Цвет фона Desktop-1 */
+  background-color: #E5E5E5; /* Серый фон вокруг макета */
   font-family: 'MuseoModerno', cursive, sans-serif;
   display: flex;
   justify-content: center;
@@ -13,13 +13,14 @@ body {
   min-height: 100vh;
 }
 
-/* Фиксированный холст 1440x1024 строго как в Figma */
+/* Холст строго 1440x1024 */
 .desktop-canvas {
   position: relative;
   width: 1440px;
   height: 1024px;
   background: #FFFFFF;
   overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
 }
 
 /* --- САЙДБАР --- */
@@ -31,7 +32,7 @@ body {
   top: 90px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-end; /* Все элементы прижаты к низу */
 }
 
 .brand-title {
@@ -51,34 +52,36 @@ body {
   color: #ff2a00;
 }
 
-/* Ряд маленьких кнопок 85x85px */
+/* Маленькие кнопки 85x85px */
 .social-row-small {
   display: flex;
-  gap: 24px; /* Зазор между кнопками */
+  gap: 24px;
   margin-bottom: 24px;
 }
 
 .btn-small {
+  display: block;
   width: 85px;
   height: 85px;
-  background: rgba(81, 61, 212, 0.6); /* Точный цвет rgba */
+  background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
 }
 
-/* Ряд больших кнопок 193-194px */
+/* Длинные кнопки 193x84px */
 .social-row-large {
   display: flex;
   gap: 24px;
 }
 
 .btn-large {
+  display: block;
   width: 193px;
   height: 84px;
   background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
 }
 
-/* --- ОБЛАСТЬ С КАРТОЧКАМИ --- */
+/* --- КАРТОЧКИ --- */
 .content-slider {
   position: absolute;
   left: 515px;
@@ -87,21 +90,18 @@ body {
   height: 844px;
 }
 
-/* Сетка из 4-х карточек по 410x410px */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 410px);
   grid-template-rows: repeat(2, 410px);
-  gap: 24px; /* Зазор 24px из ваших X/Y координат */
+  gap: 24px;
 }
 
-/* Бежевая карточка Theme box */
 .card {
   width: 410px;
   height: 410px;
-  background: #DBCF97; /* Точный цвет Theme box */
+  background: #DBCF97;
   border-radius: 32px;
-  position: relative;
   padding: 32px;
   display: flex;
   justify-content: space-between;
