@@ -105,9 +105,9 @@ body {
 /* --- КАРТОЧКИ --- */
 .content-slider {
   position: absolute;
-  left: 515px; /* Начинается ровно справа от сайдбара */
+  left: 495px; /* Начинается ровно справа от сайдбара */
   top: 90px;
-  width: 845px; /* Ширина зоны видимости 2-х колонок */
+  width: 865px; /* Ширина зоны видимости 2-х колонок */
   height: 844px;
   
   /* Включаем горизонтальный скролл */
@@ -124,16 +124,16 @@ body {
 
   -webkit-mask-image: linear-gradient(
     to right,
-    transparent 0%,
-    black 1.5%,
-    black 98.5%,
+    transparent 0px,
+    black 20px,
+    black calc(100% - 20px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
-    transparent 0%,
-    black 1.5%,
-    black 98.5%,
+    transparent 0px,
+    black 20px,
+    black calc(100% - 20px),
     transparent 100%
   );
 }
@@ -151,6 +151,7 @@ body {
   grid-auto-columns: 410px; /* Ширина каждой новой колонки */
   gap: 24px;
   width: max-content; /* Сетка растягивается по ширине под все карточки */
+  padding-left: 20px; /* Отдвигаем карточки из зоны прозрачности */
 }
 
 /* --- КАРТОЧКА --- */
