@@ -38,6 +38,24 @@ body {
   background: transparent;
 }
 
+/* --- МАНЕКЕН (ОБРЕЗКА ПО КОЛЕНИ) --- */
+.mannequin-wrapper {
+  width: 100%;
+  height: 480px; /* Фиксируем высоту, чтобы ноги скрылись снизу */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.mannequin-img {
+  height: 650px; /* Масштабируем так, чтобы коленный сустав приходился на край контейнера */
+  width: auto;
+  object-fit: cover;
+  object-position: top center;
+}
+
 .brand-title {
   width: 410px;
   height: 84px;
@@ -103,6 +121,21 @@ body {
   
   /* "Магнитная" привязка карточек к краю */
   scroll-snap-type: x mandatory;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 5%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 5%,
+    black 90%,
+    transparent 100%
+  );
 }
 
 /* Скрываем уродливую полосу прокрутки браузера */
