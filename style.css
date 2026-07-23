@@ -93,7 +93,7 @@ body {
 
 .btn-large {
   display: block;
-  width: 186px;
+  width: 188px;
   height: 85px;
   flex-shrink: 0; /* Чтобы не сжимались */
   background: rgba(81, 61, 212, 0.6);
@@ -126,14 +126,14 @@ body {
     to right,
     transparent 0px,
     black 16px,
-    black calc(100% - 32px),
+    black calc(100% - 16px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0px,
     black 16px,
-    black calc(100% - 36px),
+    black calc(100% - 16px),
     transparent 100%
   );
 }
