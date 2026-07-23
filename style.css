@@ -126,14 +126,14 @@ body {
     to right,
     transparent 0px,
     black 16px,
-    black calc(100% - 16px),
+    black calc(100% - 20px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0px,
     black 16px,
-    black calc(100% - 32px),
+    black calc(100% - 20px),
     transparent 100%
   );
 }
