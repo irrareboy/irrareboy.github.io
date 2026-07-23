@@ -33,7 +33,9 @@ body {
   top: 90px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end; /* Все элементы прижаты к низу */
+  justify-content: flex-end;
+  z-index: 10; /* Перекрывает карточки, уходящие влево! */
+  background: transparent;
 }
 
 .brand-title {
@@ -85,19 +87,40 @@ body {
 /* --- КАРТОЧКИ --- */
 .content-slider {
   position: absolute;
-  left: 515px;
+  left: 515px; /* Начинается ровно справа от сайдбара */
   top: 90px;
-  width: 845px;
+  width: 845px; /* Ширина зоны видимости 2-х колонок */
   height: 844px;
+  
+  /* Включаем горизонтальный скролл */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  
+  /* Эффект нативного оттягивания / резинки для тачпада и мобилок */
+  overscroll-behavior-x: contain; 
+  -webkit-overflow-scrolling: touch;
+  
+  /* "Магнитная" привязка карточек к краю */
+  scroll-snap-type: x mandatory;
 }
 
+/* Скрываем уродливую полосу прокрутки браузера */
+.content-slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- СЕТКА КАРТОЧЕК --- */
 .cards-grid {
   display: grid;
-  grid-template-columns: repeat(2, 410px);
-  grid-template-rows: repeat(2, 410px);
+  grid-template-rows: repeat(2, 410px); /* 2 ряда по 410px */
+  grid-auto-flow: column; /* Все новые карточки выстраиваются ВПРАВО */
+  grid-auto-columns: 410px; /* Ширина каждой новой колонки */
   gap: 24px;
+  width: max-content; /* Сетка растягивается по ширине под все карточки */
 }
 
+/* --- КАРТОЧКА --- */
 .card {
   width: 410px;
   height: 410px;
@@ -107,8 +130,11 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  
+  /* Фиксация магнита при скролле */
+  scroll-snap-align: start;
+  flex-shrink: 0;
 }
-
 .card-title {
   width: 280px;
   font-family: 'MuseoModerno';
