@@ -197,3 +197,115 @@ body {
     width: 434px; /* Под 1 колонку карточек */
   }
 }
+
+/* --- ЭЛАСТИЧНАЯ МОБИЛЬНАЯ ВЕРСИЯ --- */
+@media (max-width: 768px) {
+  body {
+    padding: 20px 16px;
+    align-items: flex-start;
+  }
+
+  /* Весь холст выстраивается в 1 колонку и центрируется */
+  .desktop-canvas {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 310px; /* Фигмовский лимит ширины */
+    margin: 0 auto;
+  }
+
+  /* САЙДБАР */
+  .sidebar {
+    width: 100%;
+    align-items: center;
+  }
+
+  /* Манекен подстраивается под высоту */
+  .mannequin-wrapper {
+    height: 260px;
+    margin-bottom: 4px;
+  }
+
+  .mannequin-img {
+    height: 360px;
+  }
+
+  /* Заголовок IRRAREBOY */
+  .brand-title {
+    width: 100%;
+    font-size: clamp(38px, 11vw, 48px); /* Резиновый шрифт: не вылезет за границы */
+    line-height: 1;
+    justify-content: flex-start;
+    margin-bottom: 12px;
+  }
+
+  /* Верхний ряд из 4 кнопок (Grid делит ширину ровно на 4 части) */
+  .social-row-small {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .btn-small {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1; /* Всегда квадратные */
+    border-radius: 28px;
+  }
+
+  /* Нижний ряд из 2 широких плашек (Grid делит ширину на 2 части) */
+  .social-row-large {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .btn-large {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 150 / 70; /* Фигмовские пропорции ширины к высоте */
+    border-radius: 28px;
+  }
+
+  /* ЛЕНТА КАРТОЧЕК */
+  .content-slider {
+    width: 100%;
+    height: auto;
+    overflow-x: visible;
+    overflow-y: visible;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    padding: 0;
+  }
+
+  /* Карточка с пропорциями Figma (309x312) */
+  .card {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 309 / 312; /* Сохраняет пропорции прямоугольника из Figma */
+    border-radius: 32px;
+    padding: clamp(20px, 6vw, 28px);
+  }
+
+  .card-title {
+    width: 80%;
+    font-size: clamp(24px, 7vw, 32px);
+    line-height: 1.25;
+  }
+
+  .card-arrow {
+    font-size: clamp(24px, 7vw, 32px);
+  }
+}
