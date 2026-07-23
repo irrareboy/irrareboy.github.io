@@ -4,70 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IRRAREBOY</title>
+  
+  <!-- Подключаем точный шрифт MuseoModerno из Figma -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=MuseoModerno:wght@400;500;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <main class="app-container">
+  <main class="desktop-canvas">
     
-    <!-- Статичный левый сайдбар -->
+    <!-- Сайдбар (Ширина 411px, слева 80px, сверху 90px) -->
     <aside class="sidebar">
-  <div class="sidebar-content">
-    <!-- Свободное пространство сверху (аватар/фото появится тут) -->
-    <div class="sidebar-avatar"></div>
+      <div class="sidebar-top-space"></div>
 
-    <!-- Заголовок -->
-    <h1 class="brand-title">IRRAREBOY<span class="dot">.</span></h1>
+      <h1 class="brand-title">IRRAREBOY<span class="dot">.</span></h1>
+      
+      <!-- Верхний ряд кнопок (85x85px) -->
+      <div class="social-row-small">
+        <a href="#" class="btn-small"></a>
+        <a href="#" class="btn-small"></a>
+        <a href="#" class="btn-small"></a>
+        <a href="#" class="btn-small"></a>
+      </div>
 
-    <!-- Блок соцсетей в точной пропорции -->
-    <div class="social-grid">
-      <a href="#" class="social-btn"></a>
-      <a href="#" class="social-btn"></a>
-      <a href="#" class="social-btn"></a>
-      <a href="#" class="social-btn"></a>
-      <a href="#" class="social-btn long"></a>
-      <a href="#" class="social-btn long"></a>
-    </div>
-  </div>
-</aside>
+      <!-- Нижний ряд кнопок (193-194px) -->
+      <div class="social-row-large">
+        <a href="#" class="btn-large"></a>
+        <a href="#" class="btn-large"></a>
+      </div>
+    </aside>
 
-    <!-- Скроллируемая область с карточками -->
+    <!-- Сетка карточек -->
     <section class="content-slider">
       <div class="cards-grid">
         
-        <!-- Карточка 1 (Закрытая) -->
+        <!-- Карточка 1 -->
         <article class="card">
-          <div class="card-inner">
-            <span class="card-title">Design inside</span>
-            <span class="card-arrow">↘</span>
-          </div>
+          <span class="card-title">Design inside</span>
+          <span class="card-arrow">↘</span>
         </article>
 
-        <!-- Карточка 2 (Пример с длинным текстом) -->
+        <!-- Карточка 2 -->
         <article class="card">
-          <div class="card-inner">
-            <span class="card-title">This is type of strochki that need this</span>
-            <span class="card-arrow">↘</span>
-          </div>
+          <span class="card-title">This is type of strochki that need this</span>
+          <span class="card-arrow">↘</span>
         </article>
 
         <!-- Карточка 3 -->
         <article class="card">
-          <div class="card-inner">
-            <span class="card-title">Design inside</span>
-            <span class="card-arrow">↘</span>
-          </div>
+          <span class="card-title">Design inside</span>
+          <span class="card-arrow">↘</span>
         </article>
 
         <!-- Карточка 4 -->
         <article class="card">
-          <div class="card-inner">
-            <span class="card-title">Design inside</span>
-            <span class="card-arrow">↘</span>
-          </div>
+          <span class="card-title">Design inside</span>
+          <span class="card-arrow">↘</span>
         </article>
-
-        <!-- Сюда в будущем просто добавляем 5-ю, 6-ю карточки, и они уходят в горизонтальный скролл -->
 
       </div>
     </section>
