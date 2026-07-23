@@ -4,46 +4,44 @@
   padding: 0;
 }
 
-/* 1. Делаем единый фон для всей страницы */
 body {
-  background-color: #F2F2F2; /* Цвет фона из твоего Content Grid в Figma */
+  background-color: #F2F2F2;
   font-family: 'MuseoModerno', cursive, sans-serif;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  overflow-x: hidden;
+  overflow-x: auto;
   padding: 40px 20px;
 }
 
-/* 2. Убираем белый прямоугольник и тень */
+/* Главный контейнер-холст */
 .desktop-canvas {
+  position: relative; /* Убираем любые форсы абсолютов */
   display: flex;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: flex-end; /* Выравниваем сайдбар и карточки по нижнему краю */
   gap: 40px;
-  max-width: 1440px;
+  max-width: 1350px;
   width: 100%;
   margin: 0 auto;
 }
 
 /* --- САЙДБАР --- */
 .sidebar {
-  flex-shrink: 0; /* Не даем сайдбару сжиматься */
+  position: relative !important; /* Напрямую запрещаем absolute */
+  left: auto !important;
+  top: auto !important;
   width: 411px;
-  height: 844px;
-  left: 80px;
-  top: 90px;
+  flex-shrink: 0; /* Не дает сайдбару сжиматься и налезать */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  z-index: 10; /* Перекрывает карточки, уходящие влево! */
-  background: transparent;
 }
 
-/* --- МАНЕКЕН (ОБРЕЗКА ПО КОЛЕНИ) --- */
 .mannequin-wrapper {
   width: 100%;
-  height: 480px; /* Фиксируем высоту, чтобы ноги скрылись снизу */
+  height: 480px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -52,19 +50,17 @@ body {
 }
 
 .mannequin-img {
-  height: 650px; /* Масштабируем так, чтобы коленный сустав приходился на край контейнера */
+  height: 650px;
   width: auto;
   object-fit: cover;
   object-position: top center;
 }
 
 .brand-title {
-  width: 410px;
-  height: 84px;
   font-family: 'MuseoModerno';
   font-weight: 500;
   font-size: 64px;
-  line-height: 102px;
+  line-height: 1;
   color: #000000;
   display: flex;
   align-items: center;
@@ -75,11 +71,10 @@ body {
   color: #ff2a00;
 }
 
-/* Маленькие кнопки 85x85px */
 .social-row-small {
   display: flex;
-  gap: 24px;
-  margin-bottom: 24px;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
 .btn-small {
@@ -90,76 +85,64 @@ body {
   border-radius: 32px;
 }
 
-/* Длинные кнопки 193x84px */
 .social-row-large {
   display: flex;
-  gap: 24px;
+  gap: 16px;
 }
 
 .btn-large {
   display: block;
-  width: 193px;
+  width: 190px;
   height: 84px;
   background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
 }
 
-/* --- КАРТОЧКИ --- */
+/* --- СЛАЙДЕР С КАРТОЧКАМИ --- */
 .content-slider {
-  position: absolute;
-  left: 495px; /* Начинается ровно справа от сайдбара */
-  top: 90px;
-  width: 885px; /* Увеличили ширину, чтобы правый край не «кусал» вторую колонку */
+  position: relative !important;
+  left: auto !important;
+  top: auto !important;
+  flex: 1;
+  max-width: 885px;
   height: 844px;
-  
-  /* Включаем горизонтальный скролл */
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
-  
-  /* Эффект нативного оттягивания / резинки для тачпада и мобилок */
-  overscroll-behavior-x: contain; 
-  /* "Магнитная" привязка карточек к краю */
+  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
+  scroll-padding-left: 10px;
   
-  /* КЛЮЧЕВАЯ СТРОЧКА: указываем магниту учитывать отступ слева! */
-  scroll-padding-left: 20px;
- 
-  -webkit-overflow-scrolling: touch;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0px,
-    black 20px,
-    black calc(100% - 20px),
+    black 15px,
+    black calc(100% - 15px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0px,
-    black 20px,
-    black calc(100% - 20px),
+    black 15px,
+    black calc(100% - 15px),
     transparent 100%
   );
 }
 
-/* Скрываем уродливую полосу прокрутки браузера */
 .content-slider::-webkit-scrollbar {
   display: none;
 }
 
-/* --- СЕТКА КАРТОЧЕК --- */
 .cards-grid {
   display: grid;
-  grid-template-rows: repeat(2, 410px); /* 2 ряда по 410px */
-  grid-auto-flow: column; /* Все новые карточки выстраиваются ВПРАВО */
-  grid-auto-columns: 410px; /* Ширина каждой новой колонки */
+  grid-template-rows: repeat(2, 410px);
+  grid-auto-flow: column;
+  grid-auto-columns: 410px;
   gap: 24px;
-  width: max-content; /* Сетка растягивается по ширине под все карточки */
-  padding-left: 20px; /* Отдвигаем карточки из зоны прозрачности */
-  padding-right: 20px; /* Отступ для последней карточки справа */
+  width: max-content;
+  padding: 0 10px;
 }
 
-/* --- КАРТОЧКА --- */
 .card {
   width: 410px;
   height: 410px;
@@ -169,11 +152,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  
-  /* Фиксация магнита при скролле */
   scroll-snap-align: start;
   flex-shrink: 0;
 }
+
 .card-title {
   width: 280px;
   font-family: 'MuseoModerno';
@@ -187,35 +169,4 @@ body {
   font-size: 32px;
   font-weight: 500;
   color: #000000;
-}
-
-/* --- АДАПТИВ ПОД КОМПАКТНЫЕ / КВАДРАТНЫЕ ЭКРАНЫ (4:3, 3:2 и мелкие 16:9) --- */
-@media (max-width: 1320px) and (min-width: 900px) {
-  
-  /* 1. Сужаем видимую область слайдера до одной колонки карточек */
-  .content-slider {
-    width: 450px; /* Помещается ровно 1 колонка карточек с отступами */
-    
-    /* Обновляем маску рассеивания под новую ширину */
-    -webkit-mask-image: linear-gradient(
-      to right,
-      transparent 0px,
-      black 20px,
-      black calc(100% - 20px),
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      to right,
-      transparent 0px,
-      black 20px,
-      black calc(100% - 20px),
-      transparent 100%
-    );
-  }
-
-  /* 2. Задаем сетке шаг ровно в 1 колонку */
-  .cards-grid {
-    grid-template-rows: repeat(2, 410px); /* По-прежнему 2 ряда (верх/низ) */
-    grid-auto-columns: 410px;           /* Ширина шага — 1 карточка */
-  }
 }
