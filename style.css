@@ -59,16 +59,20 @@ body {
 .brand-title {
   font-family: 'MuseoModerno';
   font-weight: 500;
-  font-size: 64px;
+  font-size: 60px;
   line-height: 1;
   color: #000000;
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  letter-spacing: 0.055em; /* Точно подгоняет ширину текста под блок кнопок */
   margin-bottom: 24px;
 }
 
 .brand-title .dot {
   color: #ff2a00;
+  margin-left: -0.1em;
 }
 
 .social-row-small {
@@ -81,7 +85,7 @@ body {
   display: block;
   width: 85px;
   height: 85px;
-  flex-shrink: 0; /* Чтобы не сжимались */
+  flex-shrink: 0;
   background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
 }
@@ -95,7 +99,7 @@ body {
   display: block;
   width: 188px;
   height: 85px;
-  flex-shrink: 0; /* Чтобы не сжимались */
+  flex-shrink: 0;
   background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
 }
@@ -105,7 +109,7 @@ body {
   position: relative !important;
   left: auto !important;
   top: auto !important;
-  width: 920px; /* Ширина строго под 2 колонки карточек (410 + 24 + 410 + запас на маску) */
+  width: 920px; /* 2 колонки карточек */
   max-width: 100%;
   height: 844px;
   overflow-x: auto;
@@ -114,15 +118,9 @@ body {
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
 
-  /* Магнит (snap) учитывает отступ слева в 24px */
   scroll-padding-left: 24px;
   scroll-padding-right: 24px;
   
-  /* 
-    АСИММЕТРИЧНАЯ МАСКА:
-    - Слева: плавное размытие всего на 16px (активируется красиво при скролле)
-    - Справа: чуть более выраженное размытие на 32px (показывает, что там есть еще карточки)
-  */
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0px,
@@ -143,7 +141,6 @@ body {
   display: none;
 }
 
-/* Сетка: Жесткие фиксированные размеры для сохранения квадрата */
 .cards-grid {
   display: grid;
   grid-template-rows: repeat(2, 410px);
@@ -182,74 +179,88 @@ body {
   color: #000000;
 }
 
-/* --- МАШИНА ВРЕМЕНИ ДЛЯ ЭКРАНОВ С НЕБОЛЬШОЙ ВЫСОТОЙ --- */
-/* Если экран по высоте меньше 920px (ноутбуки / 100% масштаб), 
-   аккуратно ужимаем весь холст до комфортных 82%, чтобы не крутить зум вручную */
+/* --- МАШИНА ВРЕМЕНИ ДЛЯ НЕВЫСОКИХ ЭКРАНОВ --- */
 @media (max-height: 920px) {
   .desktop-canvas {
     zoom: 0.82;
   }
 }
 
-/* --- СХЛОПЫВАНИЕ В 1 КОЛОНКУ ДЛЯ УЗКИХ ЭКРАНОВ --- */
+/* --- СХЛОПЫВАНИЕ В 1 КОЛОНКУ (Планшеты / узкие окна) --- */
 @media (max-width: 1350px) {
   .content-slider {
-    width: 434px; /* Под 1 колонку карточек */
+    width: 480px; /* Расширили окно, чтобы виден был край следующей плитки */
+    
+    /* Маска со сдвигом вправо для показа «тизера» следующей карточки */
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0px,
+      black 16px,
+      black calc(100% - 60px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0px,
+      black 16px,
+      black calc(100% - 60px),
+      transparent 100%
+    );
   }
 }
-/* --- МОБИЛЬНАЯ ВЕРСИЯ (Горизонтальный скролл) --- */
+
+/* --- МОБИЛЬНАЯ ВЕРСИЯ --- */
 @media (max-width: 768px) {
   html, body {
     height: 100%;
-    overflow: hidden; /* Фиксируем экран, убираем вертикальную тряску */
+    overflow: hidden;
   }
 
   body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center; /* Центрируем весь макет ровно по центру экрана */
+    align-items: center;
   }
 
-  /* Весь холст выстраивается в колонку строго по центру */
   .desktop-canvas {
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     width: 100%;
     margin: 0 auto;
   }
 
   /* --- СТАБИЛЬНЫЙ ВЕРХ (Сайдбар) --- */
   .sidebar {
-    width: 309px; /* Фигмовская ширина */
+    width: 309px;
     align-items: center;
     flex-shrink: 0;
   }
 
   .mannequin-wrapper {
-    height: 250px;
+    height: 240px;
     margin-bottom: 0px;
   }
 
   .mannequin-img {
-    height: 390px;
+    height: 380px;
   }
 
   .brand-title {
     width: 100%;
-    font-size: 50px;
+    font-size: 45px; /* Идеально ложится от края до края блока 309px */
+    letter-spacing: 0.05em;
     line-height: 1;
-    justify-content: flex-start;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 
   .social-row-small {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
+    gap: 10px;
     width: 100%;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
   .btn-small {
@@ -262,9 +273,8 @@ body {
   .social-row-large {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
+    gap: 10px;
     width: 100%;
-    margin-bottom: 8px;
   }
 
   .btn-large {
@@ -276,26 +286,26 @@ body {
 
   /* --- ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР --- */
   .content-slider {
-    width: 100vw; /* На всю ширину экрана смартфона */
+    width: 100vw;
     height: auto;
-    overflow-x: auto; /* Включаем горизонтальный скролл */
+    overflow-x: auto;
     overflow-y: hidden;
     scroll-behavior: smooth;
-    scroll-snap-type: x mandatory; /* Магнит по горизонтали */
+    scroll-snap-type: x mandatory;
     
-    /* Красивые мягкие края размытия слева и справа */
+    /* Размытие с увеличенным видимым окном для кусочка следующей карточки */
     -webkit-mask-image: linear-gradient(
       to right,
       transparent 0%,
-      black 15%,
-      black 85%,
+      black 10%,
+      black 90%,
       transparent 100%
     );
     mask-image: linear-gradient(
       to right,
       transparent 0%,
-      black 15%,
-      black 85%,
+      black 10%,
+      black 90%,
       transparent 100%
     );
   }
@@ -304,13 +314,11 @@ body {
     display: none;
   }
 
-  /* Ряд из карточек */
   .cards-grid {
     display: flex;
-    flex-direction: row; /* В горизонтальную линию */
+    flex-direction: row;
     gap: 16px;
     width: max-content;
-    /* Паддинг высчитывается так, чтобы первая карточка вставала ровно по центру (ширина 309px) */
     padding: 0 calc(50vw - 154.5px);
   }
 
@@ -319,7 +327,7 @@ body {
     height: 312px;
     border-radius: 32px;
     padding: 24px;
-    scroll-snap-align: center; /* Карточка магнитится строго по центру */
+    scroll-snap-align: center;
     flex-shrink: 0;
   }
 
