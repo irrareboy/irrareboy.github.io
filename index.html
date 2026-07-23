@@ -83,7 +83,7 @@
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     
-    // --- 1. ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ КОЛЕСОМ ---
+    // --- ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ КОЛЕСОМ ---
     const slider = document.querySelector('.content-slider');
 
     if (slider) {
@@ -97,32 +97,6 @@
         }
       }, { passive: false });
     }
-
-    // --- 2. АВТО-МАСШТАБИРОВАНИЕ ПОД ВЫСОТУ ЭКРАНА (Full HD + 125% scale) ---
-    function fitCanvasToScreen() {
-      const canvas = document.querySelector('.desktop-canvas');
-      if (!canvas) return;
-
-      const targetWidth = 1440;
-      const targetHeight = 1024;
-
-      const currentWidth = window.innerWidth;
-      const currentHeight = window.innerHeight;
-
-      // Если экран достаточно широкий для десктопа (>= 900px), но по высоте не влезает макет 1024px
-      if (currentWidth >= 900 && currentHeight < targetHeight) {
-        // Считаем коэффициент сжатия строго по высоте
-        const scale = currentHeight / targetHeight;
-        canvas.style.transform = `scale(${scale})`;
-        canvas.style.transformOrigin = 'top center'; // ВАЖНО: масштабируем строго из центра!
-      } else {
-        canvas.style.transform = 'none';
-      }
-    }
-
-    // Запускаем расчёт масштаба при загрузке и изменении размеров окна
-    fitCanvasToScreen();
-    window.addEventListener('resize', fitCanvasToScreen);
 
   });
 </script>
