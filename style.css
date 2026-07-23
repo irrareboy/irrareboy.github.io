@@ -1,0 +1,157 @@
+/* Сброс базовых отступов */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #f4f4f0; /* Базовый светлый фон макета */
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow: hidden; /* Запрещаем скролл всей страницы на десктопе */
+}
+
+/* Главный контейнер на пропорции 1440x1024 */
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  padding: clamp(16px, 3vw, 40px);
+  gap: clamp(16px, 2vw, 32px);
+  max-width: 1440px;
+  max-height: 1024px;
+  margin: 0 auto;
+}
+
+/* --- 1. ЛЕВЫЙ САЙДБАР (СТАТИЧНЫЙ) --- */
+.sidebar {
+  flex-shrink: 0;
+  width: clamp(280px, 25vw, 360px);
+  height: 100%;
+  background-color: #ffffff; /* Или прозрачный, как на макете */
+  z-index: 10; /* Перекрывает уходящие влево карточки! */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.brand-title {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+.brand-title span {
+  color: #ff3b30; /* Красная точка */
+}
+
+/* Сетка фиолетовых кнопок в сайдбаре */
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.social-btn {
+  aspect-ratio: 1 / 1;
+  background-color: #a482d4;
+  border-radius: clamp(12px, 2cqw, 20px);
+}
+
+.social-btn.long {
+  grid-column: span 2;
+  aspect-ratio: 2.1 / 1;
+}
+
+/* --- 2. ЗОНА ГОРИЗОНТАЛЬНОГО СКРОЛЛА КАРТОЧЕК --- */
+.content-slider {
+  flex-grow: 1;
+  height: 100%;
+  overflow-x: auto; /* Включает горизонтальную прокрутку */
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  /* Плавный скролл с доводкой до карточки */
+  scroll-snap-type: x mandatory; 
+}
+
+/* Скрываем стандартный полосатый скроллбар браузера для чистоты */
+.content-slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* Сетка карточек: на десктопе 2 строки, колонки растут вправо */
+.cards-grid {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr); /* Ровно 2 ряда (2 на 2) */
+  grid-auto-flow: column; /* Новые карточки автоматически добавляются СПРАВА */
+  grid-auto-columns: minmax(280px, 1fr);
+  gap: clamp(12px, 1.5vw, 24px);
+  height: 100%;
+}
+
+/* --- 3. КАРТОЧКА --- */
+.card {
+  scroll-snap-align: start;
+  background-color: #e2b184; /* Бежевый цвет из Figma */
+  border-radius: clamp(16px, 3cqw, 28px);
+  display: flex;
+  align-items: flex-end;
+  padding: clamp(12px, 2vw, 20px);
+  position: relative;
+  aspect-ratio: 1 / 1; /* Жесткий квадрат */
+}
+
+.card-inner {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: clamp(14px, 1.2vw, 18px);
+  max-width: 80%;
+}
+
+.card-arrow {
+  font-size: 20px;
+}
+
+/* --- Breakpoint: Переход в 1 столбец (Планшеты / Сужение) --- */
+@media (max-width: 1024px) {
+  .cards-grid {
+    grid-template-rows: repeat(1, 1fr); /* Становится 1 столбец карточек по высоте */
+  }
+}
+
+/* --- Breakpoint: Мобильный вид (Телефоны) --- */
+@media (max-width: 600px) {
+  body {
+    overflow-y: auto; /* Включаем обычный вертикальный скролл */
+  }
+
+  .app-container {
+    flex-direction: column;
+    height: auto;
+    max-height: none;
+  }
+
+  .sidebar {
+    width: 100%;
+    position: sticky;
+    top: 0;
+    padding-bottom: 16px;
+  }
+
+  .content-slider {
+    overflow-x: visible;
+  }
+
+  .cards-grid {
+    grid-template-rows: none;
+    grid-auto-flow: row; /* На мобилке карточки идут сверху вниз */
+    grid-template-columns: 1fr;
+  }
+}
