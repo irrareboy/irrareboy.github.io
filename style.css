@@ -107,7 +107,7 @@ body {
   position: absolute;
   left: 495px; /* Начинается ровно справа от сайдбара */
   top: 90px;
-  width: 865px; /* Ширина зоны видимости 2-х колонок */
+  width: 885px; /* Увеличили ширину, чтобы правый край не «кусал» вторую колонку */
   height: 844px;
   
   /* Включаем горизонтальный скролл */
@@ -117,11 +117,13 @@ body {
   
   /* Эффект нативного оттягивания / резинки для тачпада и мобилок */
   overscroll-behavior-x: contain; 
-  -webkit-overflow-scrolling: touch;
-  
   /* "Магнитная" привязка карточек к краю */
   scroll-snap-type: x mandatory;
-
+  
+  /* КЛЮЧЕВАЯ СТРОЧКА: указываем магниту учитывать отступ слева! */
+  scroll-padding-left: 20px;
+ 
+  -webkit-overflow-scrolling: touch;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0px,
@@ -152,6 +154,7 @@ body {
   gap: 24px;
   width: max-content; /* Сетка растягивается по ширине под все карточки */
   padding-left: 20px; /* Отдвигаем карточки из зоны прозрачности */
+  padding-right: 20px; /* Отступ для последней карточки справа */
 }
 
 /* --- КАРТОЧКА --- */
