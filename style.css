@@ -213,7 +213,7 @@ body {
   .desktop-canvas {
     flex-direction: column;
     align-items: center;
-    gap: 8px;
+    gap: 0px;
     width: 100%;
     max-width: 310px;
     height: 100dvh; /* Ровно 100% видимого экрана */
@@ -281,7 +281,7 @@ body {
   /* --- СКРОЛЛИТСЯ ТОЛЬКО ЭТА ЗОНА С КАРТОЧКАМИ --- */
   .content-slider {
     width: 100%;
-    flex-grow: 1; /* Занимает всё оставшееся место до низа экрана */
+    flex: 1; /* Занимает всё оставшееся место до низа экрана */
     overflow-x: hidden;
     overflow-y: auto; /* Включаем вертикальный скролл */
     scroll-behavior: smooth;
@@ -315,7 +315,7 @@ body {
     flex-direction: column;
     gap: 16px;
     width: 100%;
-    padding: 16px 0 16px 0;
+    padding: 0 0;
   }
 
   /* Карточки магнитсятся к верху зоны скролла */
@@ -324,18 +324,18 @@ body {
     height: auto;
     aspect-ratio: 309 / 312;
     border-radius: 32px;
-    padding: clamp(20px, 6vw, 28px);
+    padding: 24px;
     scroll-snap-align: start; /* Привязка магнита */
     flex-shrink: 0;
   }
 
   .card-title {
     width: 80%;
-    font-size: clamp(24px, 7vw, 32px);
-    line-height: 1.25;
+    font-size: 28px;
+    line-height: 1.2;
   }
 
   .card-arrow {
-    font-size: clamp(24px, 7vw, 32px);
+    font-size: 28px;
   }
 }
