@@ -82,22 +82,48 @@
 
 <script>
   window.addEventListener('DOMContentLoaded', () => {
+    
+    // --- 1. ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ КОЛЕСОМ ---
     const slider = document.querySelector('.content-slider');
 
     if (slider) {
       slider.addEventListener('wheel', (e) => {
-        // Проверяем, что пользователь крутит колесо по вертикали
         if (e.deltaY !== 0) {
-          e.preventDefault(); // Отключаем стандартный вертикальный скролл страницы
-          
-          // Двигаем слайдер по горизонтали на величину прокрутки колеса
+          e.preventDefault();
           slider.scrollBy({
-            left: e.deltaY * 1.5, // 1.5 — коэффициент скорости, чтобы крутилось приятно
-            behavior: 'auto'     // 'auto' дает мгновенную и точную реакцию на физическое колесо
+            left: e.deltaY * 1.5,
+            behavior: 'auto'
           });
         }
       }, { passive: false });
     }
+
+    // --- 2. АВТО-МАСШТАБИРОВАНИЕ ПОД ВЫСОТУ ЭКРАНА (Full HD + 125% scale) ---
+    function fitCanvasToScreen() {
+      const canvas = document.querySelector('.desktop-canvas');
+      if (!canvas) return;
+
+      const targetWidth = 1440;
+      const targetHeight = 1024;
+
+      const currentWidth = window.innerWidth;
+      const currentHeight = window.innerHeight;
+
+      // Если экран достаточно широкий для десктопа (>= 900px), но по высоте не влезает макет 1024px
+      if (currentWidth >= 900 && currentHeight < targetHeight) {
+        // Считаем коэффициент сжатия строго по высоте
+        const scale = currentHeight / targetHeight;
+        canvas.style.transform = `scale(${scale})`;
+        canvas.style.transformOrigin = 'top center'; // Центрируем по горизонтали
+      } else {
+        canvas.style.transform = 'none';
+      }
+    }
+
+    // Запускаем расчёт масштаба при загрузке и изменении размеров окна
+    fitCanvasToScreen();
+    window.addEventListener('resize', fitCanvasToScreen);
+
   });
 </script>
   
