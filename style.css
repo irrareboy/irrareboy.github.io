@@ -11,29 +11,29 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-x: auto;
+  overflow-x: hidden; /* Запрещаем появление горизонтальной полосы прокрутки у самой страницы */
   padding: 40px 20px;
 }
 
 /* Главный контейнер-холст */
 .desktop-canvas {
-  position: relative; /* Убираем любые форсы абсолютов */
+  position: relative;
   display: flex;
   flex-direction: row;
-  align-items: flex-end; /* Выравниваем сайдбар и карточки по нижнему краю */
+  align-items: flex-end;
   gap: 40px;
-  max-width: 1350px;
-  width: 100%;
+  width: max-content; /* Холст будет ровно той ширины, сколько занимают сайдбар + слайдер */
+  max-width: 100%;
   margin: 0 auto;
 }
 
 /* --- САЙДБАР --- */
 .sidebar {
-  position: relative !important; /* Напрямую запрещаем absolute */
+  position: relative !important;
   left: auto !important;
   top: auto !important;
   width: 411px;
-  flex-shrink: 0; /* Не дает сайдбару сжиматься и налезать */
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -103,8 +103,8 @@ body {
   position: relative !important;
   left: auto !important;
   top: auto !important;
-  flex: 1;
-  max-width: 885px;
+  width: 885px; /* Задаем четкую ширину вместо flex: 1 для предсказуемости размера */
+  max-width: 100%;
   height: 844px;
   overflow-x: auto;
   overflow-y: hidden;
