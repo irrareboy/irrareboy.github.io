@@ -10,24 +10,25 @@ body {
   font-family: 'MuseoModerno', cursive, sans-serif;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   min-height: 100vh;
   overflow-x: hidden;
+  padding: 40px 20px;
 }
 
 /* 2. Убираем белый прямоугольник и тень */
 .desktop-canvas {
-  position: relative;
-  width: 1440px;
-  height: 1024px;
-  background: transparent; /* Делаем холст прозрачным! */
-  overflow: hidden;
-  /* box-shadow убираем полностью */
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* --- САЙДБАР --- */
 .sidebar {
-  position: absolute;
+  flex-shrink: 0; /* Не даем сайдбару сжиматься */
   width: 411px;
   height: 844px;
   left: 80px;
