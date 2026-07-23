@@ -81,6 +81,7 @@ body {
   display: block;
   width: 85px;
   height: 85px;
+  flex-shrink: 0; /* Чтобы не сжимались */
   background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
 }
@@ -94,6 +95,7 @@ body {
   display: block;
   width: 190px;
   height: 84px;
+  flex-shrink: 0; /* Чтобы не сжимались */
   background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
 }
@@ -116,15 +118,15 @@ body {
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0px,
-    black 12px,
-    black calc(100% - 12px),
+    black 20px,
+    black calc(100% - 20px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0px,
-    black 12px,
-    black calc(100% - 12px),
+    black 20px,
+    black calc(100% - 20px),
     transparent 100%
   );
 }
