@@ -80,13 +80,22 @@
 
   </main>
 
-  <script>
-    const slider = document.getElementById('slider');
-    slider.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      slider.scrollLeft += e.deltaY;
-    });
-  </script>
+<script>
+  // Ждем полной загрузки страницы
+  document.addEventListener('DOMContentLoaded', () => {
+    const slider = document.querySelector('.content-slider');
+    
+    if (slider) {
+      slider.addEventListener('wheel', (e) => {
+        // Если крутим колесо по вертикали, перенаправляем в горизонтальный скролл
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          slider.scrollLeft += e.deltaY;
+        }
+      }, { passive: false });
+    }
+  });
+</script>
   
 </body>
 </html>
