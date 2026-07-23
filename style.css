@@ -21,10 +21,22 @@ body {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  gap: 40px;
+  gap: 60px;
   width: max-content; /* Холст будет ровно той ширины, сколько занимают сайдбар + слайдер */
   max-width: 100%;
   margin: 0 auto;
+  
+  /* Магия подгонки под небольшие экраны: если экран меньше 900px по высоте, */
+  /* макет пропорционально уменьшится сам, сохраняя 100% пропорции */
+  zoom: min(1, calc(vh * 0.9 / 8.5)); 
+}
+
+/* Фолбэк для браузеров, где zoom может вести себя специфично */
+@supports not (zoom: 1) {
+  .desktop-canvas {
+    transform: scale(min(1, calc(100vh / 950px)));
+    transform-origin: center center;
+  }
 }
 
 /* --- САЙДБАР --- */
@@ -103,7 +115,7 @@ body {
   position: relative !important;
   left: auto !important;
   top: auto !important;
-  width: 885px; /* Задаем четкую ширину вместо flex: 1 для предсказуемости размера */
+  width: 850px; /* Задаем четкую ширину вместо flex: 1 для предсказуемости размера */
   max-width: 100%;
   height: 844px;
   overflow-x: auto;
@@ -111,20 +123,20 @@ body {
   scroll-behavior: smooth;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-padding-left: 10px;
+  scroll-padding-left: 0px;
   
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0px,
-    black 15px,
-    black calc(100% - 15px),
+    black 8px,
+    black calc(100% - 8px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0px,
-    black 15px,
-    black calc(100% - 15px),
+    black 8px,
+    black calc(100% - 8px),
     transparent 100%
   );
 }
@@ -140,7 +152,7 @@ body {
   grid-auto-columns: 410px;
   gap: 24px;
   width: max-content;
-  padding: 0 10px;
+  padding: 0 4px;
 }
 
 .card {
