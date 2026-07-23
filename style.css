@@ -228,17 +228,17 @@ body {
   }
 
   .mannequin-wrapper {
-    height: 220px;
+    height: 250px;
     margin-bottom: 0px;
   }
 
   .mannequin-img {
-    height: 340px;
+    height: 390px;
   }
 
   .brand-title {
     width: 100%;
-    font-size: 44px;
+    font-size: 52px;
     line-height: 1;
     justify-content: flex-start;
     margin-bottom: 8px;
