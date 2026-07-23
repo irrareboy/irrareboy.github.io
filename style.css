@@ -186,3 +186,34 @@ body {
   font-weight: 500;
   color: #000000;
 }
+
+/* --- АДАПТИВ ПОД КОМПАКТНЫЕ / КВАДРАТНЫЕ ЭКРАНЫ (4:3, 3:2 и мелкие 16:9) --- */
+@media (max-width: 1320px) and (min-width: 900px) {
+  
+  /* 1. Сужаем видимую область слайдера до одной колонки карточек */
+  .content-slider {
+    width: 450px; /* Помещается ровно 1 колонка карточек с отступами */
+    
+    /* Обновляем маску рассеивания под новую ширину */
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0px,
+      black 20px,
+      black calc(100% - 20px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0px,
+      black 20px,
+      black calc(100% - 20px),
+      transparent 100%
+    );
+  }
+
+  /* 2. Задаем сетке шаг ровно в 1 колонку */
+  .cards-grid {
+    grid-template-rows: repeat(2, 410px); /* По-прежнему 2 ряда (верх/низ) */
+    grid-auto-columns: 410px;           /* Ширина шага — 1 карточка */
+  }
+}
