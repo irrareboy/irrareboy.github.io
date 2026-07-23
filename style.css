@@ -22,7 +22,6 @@ body {
   height: 1024px;
   background: transparent; /* Делаем холст прозрачным! */
   overflow: hidden;
-  margin: 0 auto;
   /* box-shadow убираем полностью */
 }
 
