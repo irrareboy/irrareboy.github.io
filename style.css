@@ -115,7 +115,7 @@ body {
   scroll-snap-type: x mandatory;
 
   /* Магнит (snap) учитывает отступ слева в 24px */
-  scroll-padding-left: 24px;
+  scroll-padding-left: 20px;
   
   /* 
     АСИММЕТРИЧНАЯ МАСКА:
@@ -133,7 +133,7 @@ body {
     to right,
     transparent 0px,
     black 16px,
-    black calc(100% - 16px),
+    black calc(100% - 32px),
     transparent 100%
   );
 }
