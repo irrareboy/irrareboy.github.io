@@ -415,65 +415,76 @@ body {
     line-height: 36px;
   }
 
-  .card-expanded {
-    position: fixed !important; /* Вырываем из галереи на весь экран */
+  .card-expanded.is-expanded {
+    display: flex !important;
+    position: fixed !important;
+    
+    /* Привязываем строго к границам экрана смартфона */
     top: 20px !important;
     left: 20px !important;
     right: 20px !important;
     bottom: 20px !important;
-    width: auto !important;
-    height: auto !important;
-    max-height: none !important;
-    z-index: 9999 !important; /* Перекрывает и кнопки, и заголовок IRRAREBOY */
+    
+    width: calc(100vw - 40px) !important;
+    height: calc(100vh - 40px) !important;
+    
+    z-index: 999999 !important;
+    
+    /* Сбрасываем трансформации и сдвиги */
+    transform: none !important;
+    margin: 0 !important;
     
     border-radius: 32px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-    overflow-y: auto; /* Если контент не влезает по высоте — крутим внутри карточки */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    overflow-y: auto;
   }
 
+  /* Чтобы маска слайдера не размывала края открытой карточки */
+  .content-slider:has(.is-expanded) {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  /* Настройки внутренних элементов под мобильный экран */
   .card-header-green {
-    min-height: 180px;
-    height: auto;
-    padding: 24px;
+    height: auto !important;
+    min-height: 140px;
+    padding: 20px !important;
   }
 
   .card-header-title {
-    font-size: 36px;
-  }
-
-  .card-arrow-close {
-    font-size: 28px;
+    font-size: 32px !important;
   }
 
   .card-body-content {
-    padding: 20px;
-    gap: 16px;
-    flex-direction: column;
+    padding: 20px !important;
+    gap: 16px !important;
+    flex-direction: column !important;
   }
 
   .card-mini-btn {
-    display: block; /* Показываем плашку, раз уж места теперь полно */
-    width: 100%;
-    height: 50px;
+    display: block !important;
+    width: 100% !important;
+    height: 48px !important;
   }
 
   .card-description {
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 13px !important;
+    line-height: 1.4 !important;
   }
 
   .card-widget-blue {
-    width: 100%;
-    padding: 20px;
-    border-radius: 24px;
+    width: 100% !important;
+    padding: 16px !important;
+    border-radius: 20px !important;
   }
 
   .widget-title {
-    font-size: 20px;
+    font-size: 18px !important;
   }
 
   .widget-support-btn {
-    height: 48px;
-    font-size: 16px;
+    height: 44px !important;
+    font-size: 15px !important;
   }
 }
