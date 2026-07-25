@@ -343,68 +343,65 @@ body {
 }
 
 /* ==========================================
-   ИНТЕРАКТИВ, ХОВЕРЫ И ЭФФЕКТЫ ТАПА
+   ИНТЕРАКТИВ, ХОВЕРЫ И ЭФФЕКТЫ ТАПА (FIXED)
    ========================================== */
 
 /* --- 1. КНОПКИ СОЦСЕТЕЙ --- */
 .btn-small, 
 .btn-large {
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), 
-              background-color 0.2s ease, 
-              box-shadow 0.2s ease;
-  -webkit-tap-highlight-color: transparent; /* Убираем серое выделение при тапе на смартфонах */
+  transition: background-color 0.25s ease, 
+              box-shadow 0.25s ease, 
+              transform 0.1s ease;
+  -webkit-tap-highlight-color: transparent;
 }
 
-/* Ховер эффекты для устройств с курсором (ПК/ноутбуки) */
+/* Ховер для ПК: Только подсвечивание и сияние, без смещения по Y */
 @media (hover: hover) {
   .btn-small:hover, 
   .btn-large:hover {
-    transform: translateY(-3px) scale(1.03);
-    background: rgba(81, 61, 212, 0.85);
-    box-shadow: 0 10px 20px rgba(81, 61, 212, 0.25);
+    background: rgba(105, 85, 240, 0.85); /* Чуть более яркий фиолетовый */
+    box-shadow: 0 0 16px rgba(81, 61, 212, 0.4); /* Мягкое неоновое свечение */
   }
 }
 
-/* Эффект нажатия (работает и на ПК, и на смартфонах) */
+/* Эффект нажатия (клики и тапы) */
 .btn-small:active, 
 .btn-large:active {
   transform: scale(0.94) !important;
   background: rgba(81, 61, 212, 0.95);
-  transition: transform 0.08s ease;
 }
 
 
 /* --- 2. КАРТОЧКИ (THEME BOX) --- */
 .card {
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
-              box-shadow 0.3s ease, 
-              background-color 0.2s ease;
+  transition: background-color 0.25s ease, 
+              box-shadow 0.25s ease, 
+              transform 0.1s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
 .card-arrow {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Ховер для ПК */
+/* Ховер для ПК: Изменение фона и мягкий акцент на стрелочке */
 @media (hover: hover) {
   .card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.08);
+    background: #E8DD9D; /* Слегка осветляем фон карточки */
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.05); /* Деликатная внутренняя рамка */
   }
 
-  /* Легкое смещение стрелочки в угол при наведении */
+  /* Стрелочка аккуратно уходит чуть глубже в угол */
   .card:hover .card-arrow {
-    transform: translate(3px, 3px) scale(1.15);
+    transform: translate(4px, 4px) scale(1.1);
   }
 }
 
-/* Эффект тапа на мобилке */
+/* Эффект нажатия (без вылета за края маски) */
 .card:active {
-  transform: scale(0.97) !important;
-  transition: transform 0.1s ease;
+  transform: scale(0.98) !important;
 }
 
 
