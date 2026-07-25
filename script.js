@@ -4,35 +4,37 @@ document.addEventListener('DOMContentLoaded', () => {
   const expandedCard = document.querySelector('.card-expanded');
   const closeBtn = document.querySelector('.card-arrow-close');
 
-  // 1. Принудительный скролл колесиком мыши (любое вращение крутит горизонтально)
+  // --- ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ КОЛЕСОМ ---
   if (slider) {
     slider.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      slider.scrollLeft += e.deltaY + e.deltaX;
+      // Если прокрутка идет по вертикали (обычное колесо)
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        slider.scrollBy({
+          left: e.deltaY * 1.5, // Множитель для приятной скорости
+          behavior: 'smooth'
+        });
+      }
     }, { passive: false });
   }
 
-  // 2. Открытие карточки
+  // --- РАСКРЫТИЕ ПЛИТКИ ---
   cards.forEach(card => {
     card.addEventListener('click', () => {
-      // Скрываем маленькую карточку, на которую кликнули (по желанию, или оставляем)
-      card.style.display = 'none';
-      
-      // Показываем большую
       if (expandedCard) {
+        // Смещаем большую карточку к тому месту, где стояла нажатая плитка
+        const cardLeft = card.offsetLeft;
+        expandedCard.style.left = `${cardLeft}px`;
+
         expandedCard.classList.add('is-expanded');
-        expandedCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
       }
     });
   });
 
-  // 3. Закрытие карточки
+  // --- ЗАКРЫТИЕ ПЛИТКИ ---
   if (closeBtn && expandedCard) {
     closeBtn.addEventListener('click', () => {
       expandedCard.classList.remove('is-expanded');
-      
-      // Возвращаем маленькие карточки
-      cards.forEach(card => card.style.display = 'flex');
     });
   }
 });
