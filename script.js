@@ -22,11 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
   cards.forEach(card => {
     card.addEventListener('click', () => {
       if (expandedCard) {
-        // Определяем горизонтальный отступ кликнутой карточки внутри сетки
-        const cardOffsetLeft = card.offsetLeft;
+        // Проверяем, десктоп ли это (ширина экрана больше 1000px)
+        if (window.innerWidth > 1000) {
+          const cardOffsetLeft = card.offsetLeft;
+          expandedCard.style.left = `${cardOffsetLeft}px`;
+        } else {
+          // На мобилке сбрасываем инлайновый left, чтобы работал CSS fixed
+          expandedCard.style.left = '';
+        }
         
-        // Позиционируем большую карточку прямо на её место
-        expandedCard.style.left = `${cardOffsetLeft}px`;
         expandedCard.classList.add('is-expanded');
       }
     });
