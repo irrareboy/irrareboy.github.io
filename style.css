@@ -66,7 +66,7 @@ body {
   align-items: center;
   width: 100%;
   justify-content: space-between;
-  letter-spacing: 0.055em; /* Точно подгоняет ширину текста под блок кнопок */
+  letter-spacing: 0.055em;
   margin-bottom: 24px;
 }
 
@@ -179,6 +179,113 @@ body {
   color: #000000;
 }
 
+/* ==========================================
+   РАСКРЫТАЯ КАРТОЧКА (EXPANDED CARD - DESKTOP)
+   ========================================== */
+.card-expanded {
+  grid-column: span 2;
+  grid-row: span 2;
+  width: 844px; /* 410px + 24px gap + 410px */
+  height: 844px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: #DBCF97;
+  border-radius: 32px;
+  align-items: stretch;
+}
+
+/* Верхняя зеленая плашка */
+.card-header-green {
+  background: #5E936B;
+  padding: 32px;
+  height: 380px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+
+.card-header-title {
+  font-family: 'MuseoModerno';
+  font-size: 48px;
+  color: #000000;
+  align-self: flex-end;
+  line-height: 1;
+}
+
+.card-arrow-close {
+  font-size: 32px;
+  color: #000000;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Нижний контентный блок */
+.card-body-content {
+  padding: 28px;
+  display: flex;
+  gap: 24px;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.card-text-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-mini-btn {
+  width: 188px;
+  height: 60px;
+  background: rgba(81, 61, 212, 0.6);
+  border-radius: 24px;
+  margin-bottom: 8px;
+}
+
+.card-description {
+  font-family: 'MuseoModerno';
+  font-size: 15px;
+  line-height: 1.35;
+  color: #000000;
+}
+
+/* Синий виджет Wishlist */
+.card-widget-blue {
+  width: 310px;
+  background: #4A7C9D;
+  border-radius: 28px;
+  padding: 24px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.widget-title {
+  font-family: 'MuseoModerno';
+  font-size: 24px;
+  color: #FFFFFF;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  padding-bottom: 8px;
+}
+
+.widget-support-btn {
+  background: #513DD4;
+  color: #FFFFFF;
+  font-family: 'MuseoModerno';
+  font-size: 20px;
+  border: none;
+  border-radius: 20px;
+  height: 54px;
+  width: 100%;
+  cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+
 /* --- МАШИНА ВРЕМЕНИ ДЛЯ НЕВЫСОКИХ ЭКРАНОВ --- */
 @media (max-height: 920px) {
   .desktop-canvas {
@@ -189,9 +296,7 @@ body {
 /* --- СХЛОПЫВАНИЕ В 1 КОЛОНКУ (Планшеты / узкие окна) --- */
 @media (max-width: 1350px) {
   .content-slider {
-    width: 480px; /* Расширили окно, чтобы виден был край следующей плитки */
-    
-    /* Маска со сдвигом вправо для показа «тизера» следующей карточки */
+    width: 480px;
     -webkit-mask-image: linear-gradient(
       to right,
       transparent 0px,
@@ -206,6 +311,24 @@ body {
       black calc(100% - 16px),
       transparent 100%
     );
+  }
+
+  /* Раскрытая карточка в 1 колонке (1 плитка в ширину, 2 в высоту) */
+  .card-expanded {
+    grid-column: span 1;
+    grid-row: span 2;
+    width: 410px;
+    height: 844px;
+  }
+
+  .card-body-content {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .card-widget-blue {
+    width: 100%;
+    height: 220px;
   }
 }
 
@@ -249,7 +372,7 @@ body {
 
   .brand-title {
     width: 100%;
-    font-size: 45px; /* Идеально ложится от края до края блока 309px */
+    font-size: 45px;
     letter-spacing: 0.05em;
     line-height: 1;
     margin-bottom: 12px;
@@ -293,7 +416,6 @@ body {
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     
-    /* Размытие с увеличенным видимым окном для кусочка следующей карточки */
     -webkit-mask-image: linear-gradient(
       to right,
       transparent 0%,
@@ -340,6 +462,56 @@ body {
   .card-arrow {
     font-size: 32px;
   }
+
+  /* --- МОБИЛЬНАЯ ВЕРСИЯ РАСКРЫТОЙ КАРТОЧКИ --- */
+  .card-expanded {
+    width: 309px;
+    height: 520px; /* Высокая плитка, перекрывающая кнопки и ник до ног манекена */
+    border-radius: 32px;
+    scroll-snap-align: center;
+    flex-shrink: 0;
+  }
+
+  .card-header-green {
+    height: 200px;
+    padding: 20px;
+  }
+
+  .card-header-title {
+    font-size: 32px;
+  }
+
+  .card-body-content {
+    padding: 16px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card-mini-btn {
+    display: none;
+  }
+
+  .card-description {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .card-widget-blue {
+    width: 100%;
+    height: 150px;
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .widget-title {
+    font-size: 18px;
+  }
+
+  .widget-support-btn {
+    height: 42px;
+    font-size: 16px;
+    border-radius: 16px;
+  }
 }
 
 /* ==========================================
@@ -356,16 +528,14 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* Ховер для ПК: Только подсвечивание и сияние, без смещения по Y */
 @media (hover: hover) {
   .btn-small:hover, 
   .btn-large:hover {
-    background: rgba(105, 85, 240, 0.85); /* Чуть более яркий фиолетовый */
-    box-shadow: 0 0 16px rgba(81, 61, 212, 0.4); /* Мягкое неоновое свечение */
+    background: rgba(105, 85, 240, 0.85);
+    box-shadow: 0 0 16px rgba(81, 61, 212, 0.4);
   }
 }
 
-/* Эффект нажатия (клики и тапы) */
 .btn-small:active, 
 .btn-large:active {
   transform: scale(0.94) !important;
@@ -386,20 +556,17 @@ body {
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Ховер для ПК: Изменение фона и мягкий акцент на стрелочке */
 @media (hover: hover) {
   .card:hover {
-    background: #E8DD9D; /* Слегка осветляем фон карточки */
-    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.05); /* Деликатная внутренняя рамка */
+    background: #E8DD9D;
+    box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.05);
   }
 
-  /* Стрелочка аккуратно уходит чуть глубже в угол */
   .card:hover .card-arrow {
     transform: translate(4px, 4px) scale(1.1);
   }
 }
 
-/* Эффект нажатия (без вылета за края маски) */
 .card:active {
   transform: scale(0.98) !important;
 }
