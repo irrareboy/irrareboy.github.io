@@ -415,76 +415,84 @@ body {
     line-height: 36px;
   }
 
+  /* Позиционируем плашку строго по центру и ниже манекена */
   .card-expanded.is-expanded {
     display: flex !important;
     position: fixed !important;
     
-    /* Привязываем строго к границам экрана смартфона */
-    top: 20px !important;
-    left: 20px !important;
-    right: 20px !important;
-    bottom: 20px !important;
+    /* Центрируем по горизонтали относительно экрана */
+    left: 50% !important;
+    transform: translateX(-50%) !important;
     
-    width: calc(100vw - 40px) !important;
-    height: calc(100vh - 40px) !important;
+    /* Ограничиваем ширину, чтобы она идеально совпадала с кнопками/карточками (309px) */
+    width: 309px !important;
+    max-width: calc(100vw - 32px) !important;
+    
+    /* 
+      Отступ сверху (top: 260px) подбирается так, чтобы манекен оставался открыт,
+      а заголовок IRRAREBOY, кнопки и нижние карточки перекрывались.
+      Если манекен слегка перекрывается — уменьшь/увеличь это значение.
+    */
+    top: 260px !important;
+    bottom: 20px !important;
+    height: auto !important;
     
     z-index: 999999 !important;
-    
-    /* Сбрасываем трансформации и сдвиги */
-    transform: none !important;
     margin: 0 !important;
     
     border-radius: 32px;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
     overflow-y: auto;
   }
 
-  /* Чтобы маска слайдера не размывала края открытой карточки */
+  /* Отключаем маску размытия слайдера, когда плашка открыта */
   .content-slider:has(.is-expanded) {
     -webkit-mask-image: none !important;
     mask-image: none !important;
   }
 
-  /* Настройки внутренних элементов под мобильный экран */
+  /* Адаптируем внутренний контент под компактную плашку 309px */
   .card-header-green {
     height: auto !important;
-    min-height: 140px;
+    min-height: 120px;
     padding: 20px !important;
   }
 
   .card-header-title {
-    font-size: 32px !important;
+    font-size: 28px !important;
   }
 
   .card-body-content {
-    padding: 20px !important;
-    gap: 16px !important;
+    padding: 16px !important;
+    gap: 12px !important;
     flex-direction: column !important;
   }
 
   .card-mini-btn {
     display: block !important;
     width: 100% !important;
-    height: 48px !important;
+    height: 40px !important;
+    border-radius: 16px !important;
   }
 
   .card-description {
-    font-size: 13px !important;
-    line-height: 1.4 !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
   }
 
   .card-widget-blue {
     width: 100% !important;
-    padding: 16px !important;
+    padding: 14px !important;
     border-radius: 20px !important;
   }
 
   .widget-title {
-    font-size: 18px !important;
+    font-size: 16px !important;
   }
 
   .widget-support-btn {
-    height: 44px !important;
-    font-size: 15px !important;
+    height: 40px !important;
+    font-size: 14px !important;
+    border-radius: 14px !important;
   }
 }
