@@ -1,40 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
   const slider = document.querySelector('.content-slider');
   const cards = document.querySelectorAll('.card');
-  const expandedCard = document.querySelector('.card-expanded');
+  const overlay = document.querySelector('.expanded-overlay');
   const closeBtn = document.querySelector('.card-arrow-close');
 
-  // --- ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ КОЛЕСОМ ---
+  // 1. Принудительный скролл колесиком (без Shift)
   if (slider) {
     slider.addEventListener('wheel', (e) => {
-      // Если прокрутка идет по вертикали (обычное колесо)
-      if (e.deltaY !== 0) {
-        e.preventDefault();
-        slider.scrollBy({
-          left: e.deltaY * 1.5, // Множитель для приятной скорости
-          behavior: 'smooth'
-        });
-      }
+      // Предотвращаем стандартный вертикальный скролл страницы
+      e.preventDefault();
+      
+      // Перенаправляем вектор прокрутки
+      const delta = e.deltaY || e.deltaX;
+      slider.scrollLeft += delta * 1.2;
     }, { passive: false });
   }
 
-  // --- РАСКРЫТИЕ ПЛИТКИ ---
+  // 2. Открытие всплывающей модалки при клике на любую карточку
   cards.forEach(card => {
     card.addEventListener('click', () => {
-      if (expandedCard) {
-        // Смещаем большую карточку к тому месту, где стояла нажатая плитка
-        const cardLeft = card.offsetLeft;
-        expandedCard.style.left = `${cardLeft}px`;
-
-        expandedCard.classList.add('is-expanded');
+      if (overlay) {
+        overlay.classList.add('is-active');
       }
     });
   });
 
-  // --- ЗАКРЫТИЕ ПЛИТКИ ---
-  if (closeBtn && expandedCard) {
+  // 3. Закрытие по крестику или клику по темному фону
+  if (closeBtn && overlay) {
     closeBtn.addEventListener('click', () => {
-      expandedCard.classList.remove('is-expanded');
+      overlay.classList.remove('is-active');
+    });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.remove('is-active');
+      }
     });
   }
 });
