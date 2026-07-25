@@ -140,9 +140,9 @@ body {
   );
 }
 
-/* Когда карточка открыта — прячем боковое размытие, чтобы не было ощущения, что можно скроллить */
 .content-slider.is-locked {
   overflow-x: hidden !important;
+  width: 900px !important;
   -webkit-mask-image: none !important;
   mask-image: none !important;
 }
@@ -210,7 +210,7 @@ body {
   position: absolute;
   top: 0;
   left: 24px;
-  z-index: 10;
+  z-index: 100;
   
   width: 844px;  /* Ровно 2 колонки: 410 + 24 + 410 */
   height: 844px; /* Ровно 2 строки: 410 + 24 + 410 */
@@ -218,7 +218,7 @@ body {
   border-radius: 32px;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  box-shadow: 20 20px 20px rgba(0, 0, 0, 0.25);
 }
 
 .card-expanded.is-expanded {
@@ -350,6 +350,7 @@ body {
     align-items: center;
     gap: 24px;
     width: 100%;
+    position: relative;
   }
 
   .sidebar {
@@ -402,6 +403,7 @@ body {
     width: 100vw;
     height: 360px;
     padding: 20px 0;
+    overflow-x: auto !important; /* Разрешаем скролл */
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
 
@@ -447,7 +449,7 @@ body {
   /* 3. Ограничиваем открытую карточку по высоте галереи */
   .card-expanded.is-expanded {
     display: flex !important;
-    position: absolute !important;
+    position: fixed !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
     width: 309px !important;
@@ -462,7 +464,7 @@ body {
       2. bottom: 20px фиксирует НИЖНИЙ КРАЙ карточки ровно там, 
       где заканчивается галерея слайдера!
     */
-    bottom: 20 !important;
+    bottom: 25px !important;
     height: auto !important; /* Высота посчитается автоматически между top и bottom */
     
     z-index: 999999 !important;
