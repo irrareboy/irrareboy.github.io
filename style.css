@@ -119,8 +119,6 @@ body {
   height: 844px;
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-behavior: smooth;
-  overscroll-behavior-x: contain;
   
   -webkit-mask-image: linear-gradient(
     to right,
@@ -143,6 +141,7 @@ body {
 }
 
 .cards-grid {
+  position: relative; /* Чтобы раскрытая плашка позиционировалась строго внутри галереи */
   display: grid;
   grid-template-rows: repeat(2, 410px);
   grid-auto-flow: column;
@@ -195,44 +194,33 @@ body {
 }
 
 /* ==========================================
-   МОДАЛЬНАЯ РАСКРЫТАЯ КАРТОЧКА (OVERLAY)
+   РАСКРЫТАЯ ПЛИТКА (ВНУТРИ СЕТКИ)
    ========================================== */
 
-.expanded-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  z-index: 9999;
-  display: none;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-.expanded-overlay.is-active {
-  display: flex;
-}
-
 .card-expanded {
-  width: 844px;
-  max-width: 100%;
-  max-height: 90vh;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 24px;
+  z-index: 10;
+  
+  width: 844px;  /* Ровно 2 колонки: 410 + 24 + 410 */
+  height: 844px; /* Ровно 2 строки: 410 + 24 + 410 */
   background: #DBCF97;
   border-radius: 32px;
-  display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.card-expanded.is-expanded {
+  display: flex;
 }
 
 .card-header-green {
   background: #5E936B;
   padding: 32px;
-  min-height: 260px;
+  height: 380px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -248,11 +236,10 @@ body {
 }
 
 .card-arrow-close {
-  font-size: 36px;
+  font-size: 32px;
   color: #000000;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  padding: 0 8px;
 }
 
 .card-body-content {
@@ -260,6 +247,7 @@ body {
   display: flex;
   gap: 24px;
   flex-grow: 1;
+  justify-content: space-between;
 }
 
 .card-text-block {
@@ -292,7 +280,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 20px;
   flex-shrink: 0;
 }
 
@@ -323,18 +310,23 @@ body {
   }
 }
 
-/* --- ПЛАНШЕТЫИ УЗКИЕ ЭКРАНЫ --- */
+/* --- ПЛАНШЕТЫ И УЗКИЕ ЭКРАНЫ --- */
 @media (max-width: 1350px) {
   .content-slider {
     width: 480px;
   }
-  
+
+  .card-expanded {
+    width: 410px;
+  }
+
   .card-body-content {
     flex-direction: column;
   }
 
   .card-widget-blue {
     width: 100%;
+    height: 200px;
   }
 }
 
@@ -398,14 +390,13 @@ body {
     border-radius: 24px;
   }
 
-  /* ВОЗВРАЩАЕМ ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР НА МОБИЛКЕ */
   .content-slider {
     width: 100vw;
     height: 340px;
   }
 
   .cards-grid {
-    display: flex !important; /* Убираем вертикальную сетку */
+    display: flex !important;
     flex-direction: row !important;
     gap: 16px;
     width: max-content;
@@ -424,25 +415,25 @@ body {
     line-height: 36px;
   }
 
-  /* МОБИЛЬНАЯ МОДАЛКА */
   .card-expanded {
-    width: 100%;
-    max-height: 85vh;
-    border-radius: 28px;
+    top: 0;
+    left: 20px;
+    width: 309px;
+    height: 312px;
   }
 
   .card-header-green {
-    min-height: 160px;
-    padding: 20px;
+    height: 140px;
+    padding: 16px;
   }
 
   .card-header-title {
-    font-size: 32px;
+    font-size: 28px;
   }
 
   .card-body-content {
-    padding: 18px;
-    gap: 16px;
+    padding: 14px;
+    gap: 10px;
   }
 
   .card-mini-btn {
@@ -450,20 +441,21 @@ body {
   }
 
   .card-description {
-    font-size: 13px;
+    font-size: 11px;
+    line-height: 1.3;
   }
 
   .card-widget-blue {
-    padding: 16px;
-    border-radius: 20px;
+    padding: 12px;
+    border-radius: 16px;
   }
 
   .widget-title {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .widget-support-btn {
-    height: 44px;
-    font-size: 16px;
+    height: 36px;
+    font-size: 14px;
   }
 }
