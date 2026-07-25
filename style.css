@@ -29,9 +29,6 @@ body {
 
 /* --- САЙДБАР --- */
 .sidebar {
-  position: relative !important;
-  left: auto !important;
-  top: auto !important;
   width: 411px;
   flex-shrink: 0;
   display: flex;
@@ -47,6 +44,8 @@ body {
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mannequin-img {
@@ -54,6 +53,11 @@ body {
   width: auto;
   object-fit: cover;
   object-position: top center;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.mannequin-wrapper:active .mannequin-img {
+  transform: scale(1.05) rotate(3deg);
 }
 
 .brand-title {
@@ -88,6 +92,8 @@ body {
   flex-shrink: 0;
   background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.1s ease;
 }
 
 .social-row-large {
@@ -102,24 +108,19 @@ body {
   flex-shrink: 0;
   background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.1s ease;
 }
 
 /* --- СЛАЙДЕР С КАРТОЧКАМИ --- */
 .content-slider {
-  position: relative !important;
-  left: auto !important;
-  top: auto !important;
-  width: 920px; /* 2 колонки карточек */
+  width: 920px;
   max-width: 100%;
   height: 844px;
   overflow-x: auto;
   overflow-y: hidden;
   scroll-behavior: smooth;
   overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory;
-
-  scroll-padding-left: 24px;
-  scroll-padding-right: 24px;
   
   -webkit-mask-image: linear-gradient(
     to right,
@@ -142,17 +143,15 @@ body {
 }
 
 .cards-grid {
-  position: relative; /* Обязательно для позиционирования раскрытой карточки поверх */
   display: grid;
   grid-template-rows: repeat(2, 410px);
   grid-auto-flow: column;
   grid-auto-columns: 410px;
   gap: 24px;
   width: max-content;
-  padding: 0 24px 0 24px;
+  padding: 0 24px;
 }
 
-/* Обычная свернутая карточка */
 .card {
   width: 410px;
   height: 410px;
@@ -162,7 +161,6 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  scroll-snap-align: start;
   flex-shrink: 0;
   cursor: pointer;
   transition: background-color 0.25s ease, transform 0.1s ease;
@@ -181,40 +179,60 @@ body {
   font-size: 32px;
   font-weight: 500;
   color: #000000;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.25s ease;
+}
+
+@media (hover: hover) {
+  .btn-small:hover, .btn-large:hover {
+    background: rgba(105, 85, 240, 0.85);
+  }
+  .card:hover {
+    background: #E8DD9D;
+  }
+  .card:hover .card-arrow {
+    transform: translate(4px, 4px) scale(1.1);
+  }
 }
 
 /* ==========================================
-   РАСКРЫТАЯ КАРТОЧКА (EXPANDED CARD)
+   МОДАЛЬНАЯ РАСКРЫТАЯ КАРТОЧКА (OVERLAY)
    ========================================== */
-.card-expanded {
-  display: none; /* По умолчанию скрыта */
-  position: absolute; /* Раскрываем поверх галереи */
+
+.expanded-overlay {
+  position: fixed;
   top: 0;
-  left: 24px;
-  z-index: 10; /* Перекрывает обычные плитки */
-  
-  width: 844px; /* 410px + 24px gap + 410px */
-  height: 844px;
-  padding: 0;
-  flex-direction: column;
-  overflow: hidden;
-  background: #DBCF97;
-  border-radius: 32px;
-  align-items: stretch;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Легкая тень для объема */
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
-/* Когда активна — показываем в flex-режиме */
-.card-expanded.is-expanded {
+.expanded-overlay.is-active {
   display: flex;
 }
 
-/* Верхняя зеленая плашка */
+.card-expanded {
+  width: 844px;
+  max-width: 100%;
+  max-height: 90vh;
+  background: #DBCF97;
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+}
+
 .card-header-green {
   background: #5E936B;
   padding: 32px;
-  height: 380px;
+  min-height: 260px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -230,19 +248,18 @@ body {
 }
 
 .card-arrow-close {
-  font-size: 32px;
+  font-size: 36px;
   color: #000000;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
+  padding: 0 8px;
 }
 
-/* Нижний контентный блок */
 .card-body-content {
   padding: 28px;
   display: flex;
   gap: 24px;
   flex-grow: 1;
-  justify-content: space-between;
 }
 
 .card-text-block {
@@ -257,25 +274,25 @@ body {
   height: 60px;
   background: rgba(81, 61, 212, 0.6);
   border-radius: 24px;
-  margin-bottom: 8px;
+  flex-shrink: 0;
 }
 
 .card-description {
   font-family: 'MuseoModerno';
   font-size: 15px;
-  line-height: 1.35;
+  line-height: 1.4;
   color: #000000;
 }
 
-/* Синий виджет Wishlist */
 .card-widget-blue {
   width: 310px;
   background: #4A7C9D;
   border-radius: 28px;
-  padding: 24px 20px 20px 20px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 20px;
   flex-shrink: 0;
 }
 
@@ -297,69 +314,51 @@ body {
   height: 54px;
   width: 100%;
   cursor: pointer;
-  transition: transform 0.1s ease, background-color 0.2s ease;
 }
 
-/* --- НЕВЫСОКИЕ ЭКРАНЫ --- */
+/* --- НЕВЫСОКИЕ ЭКРАНЫ ПК --- */
 @media (max-height: 920px) {
   .desktop-canvas {
     zoom: 0.82;
   }
 }
 
-/* --- СХЛОПЫВАНИЕ В 1 КОЛОНКУ --- */
+/* --- ПЛАНШЕТЫИ УЗКИЕ ЭКРАНЫ --- */
 @media (max-width: 1350px) {
   .content-slider {
     width: 480px;
   }
-
-  .card-expanded {
-    width: 410px;
-    height: 844px;
-  }
-
+  
   .card-body-content {
     flex-direction: column;
-    gap: 16px;
   }
 
   .card-widget-blue {
     width: 100%;
-    height: 220px;
   }
 }
 
-/* --- МОБИЛЬНАЯ ВЕРСИЯ --- */
+/* --- МОБИЛЬНАЯ ВЕРСИЯ (ДО 1000px) --- */
 @media (max-width: 1000px) {
-  html, body {
-    height: 100%;
-    overflow: hidden;
-  }
-
   body {
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 20px 0;
+    align-items: flex-start;
   }
 
   .desktop-canvas {
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 24px;
     width: 100%;
-    margin: 0 auto;
   }
 
   .sidebar {
     width: 309px;
-    align-items: center;
-    flex-shrink: 0;
   }
 
   .mannequin-wrapper {
     height: 240px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
   }
 
   .mannequin-img {
@@ -367,10 +366,7 @@ body {
   }
 
   .brand-title {
-    width: 100%;
     font-size: 45px;
-    letter-spacing: 0.05em;
-    line-height: 1;
     margin-bottom: 12px;
   }
 
@@ -379,7 +375,6 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     width: 100%;
-    margin-bottom: 10px;
   }
 
   .btn-small {
@@ -403,43 +398,41 @@ body {
     border-radius: 24px;
   }
 
+  /* ВОЗВРАЩАЕМ ГОРИЗОНТАЛЬНЫЙ СЛАЙДЕР НА МОБИЛКЕ */
   .content-slider {
     width: 100vw;
-    height: auto;
+    height: 340px;
   }
 
   .cards-grid {
-    padding: 0 calc(50vw - 154.5px);
+    display: flex !important; /* Убираем вертикальную сетку */
+    flex-direction: row !important;
+    gap: 16px;
+    width: max-content;
+    padding: 0 20px;
   }
 
   .card {
     width: 309px;
     height: 312px;
-    border-radius: 32px;
     padding: 24px;
-    scroll-snap-align: center;
-    flex-shrink: 0;
   }
 
   .card-title {
     width: 210px;
-    font-size: 32px;
-    line-height: 42px;
+    font-size: 28px;
+    line-height: 36px;
   }
 
-  .card-arrow {
-    font-size: 32px;
-  }
-
+  /* МОБИЛЬНАЯ МОДАЛКА */
   .card-expanded {
-    top: 0;
-    left: calc(50vw - 154.5px); /* Выравнивание по центру экрана мобилки */
-    width: 309px;
-    height: 520px;
+    width: 100%;
+    max-height: 85vh;
+    border-radius: 28px;
   }
 
   .card-header-green {
-    height: 200px;
+    min-height: 160px;
     padding: 20px;
   }
 
@@ -448,9 +441,8 @@ body {
   }
 
   .card-body-content {
-    padding: 16px;
-    flex-direction: column;
-    gap: 12px;
+    padding: 18px;
+    gap: 16px;
   }
 
   .card-mini-btn {
@@ -458,14 +450,11 @@ body {
   }
 
   .card-description {
-    font-size: 12px;
-    line-height: 1.3;
+    font-size: 13px;
   }
 
   .card-widget-blue {
-    width: 100%;
-    height: 150px;
-    padding: 14px;
+    padding: 16px;
     border-radius: 20px;
   }
 
@@ -474,47 +463,7 @@ body {
   }
 
   .widget-support-btn {
-    height: 42px;
+    height: 44px;
     font-size: 16px;
-    border-radius: 16px;
   }
-}
-
-/* ==========================================
-   ИНТЕРАКТИВ И ХОВЕРЫ
-   ========================================== */
-.btn-small, .btn-large {
-  cursor: pointer;
-  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.1s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-
-@media (hover: hover) {
-  .btn-small:hover, .btn-large:hover {
-    background: rgba(105, 85, 240, 0.85);
-    box-shadow: 0 0 16px rgba(81, 61, 212, 0.4);
-  }
-  .card:hover {
-    background: #E8DD9D;
-  }
-  .card:hover .card-arrow {
-    transform: translate(4px, 4px) scale(1.1);
-  }
-}
-
-.btn-small:active, .btn-large:active, .card:active {
-  transform: scale(0.96);
-}
-
-.mannequin-wrapper {
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.mannequin-img {
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.mannequin-wrapper:active .mannequin-img {
-  transform: scale(1.05) rotate(3deg);
 }
