@@ -142,6 +142,7 @@ body {
 }
 
 .cards-grid {
+  position: relative; /* Обязательно для позиционирования раскрытой карточки поверх */
   display: grid;
   grid-template-rows: repeat(2, 410px);
   grid-auto-flow: column;
@@ -188,8 +189,11 @@ body {
    ========================================== */
 .card-expanded {
   display: none; /* По умолчанию скрыта */
-  grid-column: span 2;
-  grid-row: span 2;
+  position: absolute; /* Раскрываем поверх галереи */
+  top: 0;
+  left: 24px;
+  z-index: 10; /* Перекрывает обычные плитки */
+  
   width: 844px; /* 410px + 24px gap + 410px */
   height: 844px;
   padding: 0;
@@ -198,7 +202,7 @@ body {
   background: #DBCF97;
   border-radius: 32px;
   align-items: stretch;
-  scroll-snap-align: start;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Легкая тень для объема */
 }
 
 /* Когда активна — показываем в flex-режиме */
@@ -310,8 +314,6 @@ body {
   }
 
   .card-expanded {
-    grid-column: span 1;
-    grid-row: span 2;
     width: 410px;
     height: 844px;
   }
@@ -407,10 +409,6 @@ body {
   }
 
   .cards-grid {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
-    width: max-content;
     padding: 0 calc(50vw - 154.5px);
   }
 
@@ -434,11 +432,10 @@ body {
   }
 
   .card-expanded {
+    top: 0;
+    left: calc(50vw - 154.5px); /* Выравнивание по центру экрана мобилки */
     width: 309px;
     height: 520px;
-    border-radius: 32px;
-    scroll-snap-align: center;
-    flex-shrink: 0;
   }
 
   .card-header-green {
