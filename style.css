@@ -162,6 +162,7 @@ body {
   align-items: flex-end;
   scroll-snap-align: start;
   flex-shrink: 0;
+  transition: opacity 0.25s ease;
 }
 
 .card-title {
@@ -179,14 +180,38 @@ body {
   color: #000000;
 }
 
+
 /* ==========================================
-   РАСКРЫТАЯ КАРТОЧКА (EXPANDED CARD - DESKTOP)
+   ИНТЕРАКТИВНОЕ РАСКРЫТИЕ КАРТОЧЕК (EXPANDED)
    ========================================== */
+
+/* Оверлей-затемнение на весь экран */
+.expanded-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+  transition: background-color 0.4s ease;
+  overflow: hidden;
+}
+
+.expanded-overlay.is-active {
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Раскрывающаяся карточка (начальное состояние перед кликом) */
 .card-expanded {
-  grid-column: span 2;
-  grid-row: span 2;
-  width: 844px; /* 410px + 24px gap + 410px */
-  height: 844px;
+  position: absolute;
+  width: 410px;
+  height: 410px;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -194,6 +219,35 @@ body {
   background: #DBCF97;
   border-radius: 32px;
   align-items: stretch;
+  opacity: 0;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  
+  /* Плавный переход всех геометрических параметров */
+  transition: 
+    top 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    left 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.2s ease;
+}
+
+/* Конечное раскрытое состояние на Desktop */
+.card-expanded.is-expanded {
+  opacity: 1;
+  width: 844px; /* 410px + 24px gap + 410px */
+  height: 844px;
+}
+
+/* Скрываем контент внутри, пока карточка маленькая */
+.card-header-green,
+.card-body-content {
+  opacity: 0;
+  transition: opacity 0.25s ease 0.15s;
+}
+
+.card-expanded.is-expanded .card-header-green,
+.card-expanded.is-expanded .card-body-content {
+  opacity: 1;
 }
 
 /* Верхняя зеленая плашка */
@@ -286,6 +340,7 @@ body {
   transition: transform 0.1s ease, background-color 0.2s ease;
 }
 
+
 /* --- МАШИНА ВРЕМЕНИ ДЛЯ НЕВЫСОКИХ ЭКРАНОВ --- */
 @media (max-height: 920px) {
   .desktop-canvas {
@@ -313,10 +368,8 @@ body {
     );
   }
 
-  /* Раскрытая карточка в 1 колонке (1 плитка в ширину, 2 в высоту) */
-  .card-expanded {
-    grid-column: span 1;
-    grid-row: span 2;
+  /* Раскрытая карточка в 1 колонке */
+  .card-expanded.is-expanded {
     width: 410px;
     height: 844px;
   }
@@ -464,12 +517,10 @@ body {
   }
 
   /* --- МОБИЛЬНАЯ ВЕРСИЯ РАСКРЫТОЙ КАРТОЧКИ --- */
-  .card-expanded {
+  .card-expanded.is-expanded {
     width: 309px;
-    height: 520px; /* Высокая плитка, перекрывающая кнопки и ник до ног манекена */
+    height: 520px;
     border-radius: 32px;
-    scroll-snap-align: center;
-    flex-shrink: 0;
   }
 
   .card-header-green {
@@ -515,7 +566,7 @@ body {
 }
 
 /* ==========================================
-   ИНТЕРАКТИВ, ХОВЕРЫ И ЭФФЕКТЫ ТАПА (FIXED)
+   ИНТЕРАКТИВ, ХОВЕРЫ И ЭФФЕКТЫ ТАПА
    ========================================== */
 
 /* --- 1. КНОПКИ СОЦСЕТЕЙ --- */
@@ -548,7 +599,8 @@ body {
   cursor: pointer;
   transition: background-color 0.25s ease, 
               box-shadow 0.25s ease, 
-              transform 0.1s ease;
+              transform 0.1s ease,
+              opacity 0.25s ease;
   -webkit-tap-highlight-color: transparent;
 }
 
