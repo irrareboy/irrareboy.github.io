@@ -4,12 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const expandedCard = document.querySelector('.card-expanded');
   const closeBtn = document.querySelector('.card-arrow-close');
 
-  // 1. ПОКОЛОНОЧНАЯ ПРОКРУТКА КОЛЕСОМ НА ПК
+  // 1. ПОКОЛОНОЧНЫЙ СКРОЛЛ НА ПК
   if (slider) {
     let isScrolling = false;
 
     slider.addEventListener('wheel', (e) => {
-      // Запрещаем скролл, если карточка открыта
+      // Запрещаем прокрутку галереи, если карточка уже открыта
       if (expandedCard && expandedCard.classList.contains('is-expanded')) {
         e.preventDefault();
         return;
@@ -18,55 +18,46 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       if (isScrolling) return;
 
-      // Определение направления скролла
       const delta = e.deltaY !== 0 ? e.deltaY : e.deltaX;
       if (Math.abs(delta) < 10) return;
 
       isScrolling = true;
 
-      // Длина шага: на 2x2 — 434px (410 + 24), на 2x1 (планшет) — 434px, на мобилке — 325px
-      const columnWidth = window.innerWidth <= 1000 ? 325 : 434;
+      // Шаг прокрутки: ровно одна колонка (410px + gap 24px)
+      const columnStep = window.innerWidth <= 1000 ? 325 : 434;
       const direction = delta > 0 ? 1 : -1;
 
       slider.scrollBy({
-        left: direction * columnWidth,
+        left: direction * columnStep,
         behavior: 'smooth'
       });
 
-      // Задержка против «дребезга» колесика мыши
       setTimeout(() => {
         isScrolling = false;
-      }, 350);
+      }, 300);
     }, { passive: false });
   }
 
-  // 2. УМНОЕ ОТКРЫТИЕ КАРТОЧКИ (ВЛЕВО ИЛИ ВПРАВО)
+  // 2. ОТКРЫТИЕ КАРТОЧКИ
   cards.forEach((card, index) => {
     card.addEventListener('click', () => {
       if (!expandedCard) return;
 
       if (window.innerWidth > 1000) {
         const cardOffsetLeft = card.offsetLeft;
-        const totalCards = cards.length;
-        
-        // Для сетки 2х2: узнаем номер колонки (0, 1, 2...)
-        // По HTML у нас пары: [0,1], [2,3], [4,5]. Колонка = Math.floor(index / 2)
         const columnIndex = Math.floor(index / 2);
-        const totalColumns = Math.ceil(totalCards / 2);
+        const totalColumns = Math.ceil(cards.length / 2);
 
-        // Если это последняя колонка — раскрываем карточку ВЛЕВО
+        // Если это самая последняя колонка — открываем влево
         if (columnIndex >= totalColumns - 1 && totalColumns > 1) {
-          // Сдвигаем влево на одну ширину плитки + gap (434px)
           expandedCard.style.left = `${cardOffsetLeft - 434}px`;
         } else {
-          // Иначе раскрываем вправо
           expandedCard.style.left = `${cardOffsetLeft}px`;
         }
       } else {
         expandedCard.style.left = '';
       }
 
-      // Добавляем класс открытой карточки и блокируем скролл слайдера
       expandedCard.classList.add('is-expanded');
       if (slider) {
         slider.classList.add('is-locked');
