@@ -73,37 +73,27 @@
 
   </main>
 
-  <!-- ==========================================
-       ШАБЛОН РАСКРЫТОЙ КАРТОЧКИ (Скрыт по умолчанию)
-       ========================================== -->
-  <div class="expanded-overlay js-expanded-overlay">
-    <article class="card-expanded js-card-expanded">
-      
-      <div class="card-header-green">
-        <!-- JS будет подставлять сюда заголовок из мелкой карточки -->
-        <span class="card-header-title js-expanded-title">Design inside</span>
-        <span class="card-arrow-close js-close-expanded">↗</span>
+ <!-- Оверлей для всплывающей карточки -->
+<div class="expanded-overlay">
+  <div class="card-expanded">
+    <div class="card-header-green">
+      <div class="card-header-title">Design inside</div>
+      <div class="card-arrow-close">✕</div>
+    </div>
+    <div class="card-body-content">
+      <div class="card-text-block">
+        <div class="card-mini-btn"></div>
+        <p class="card-description">
+          The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow...
+        </p>
       </div>
-
-      <div class="card-body-content">
-        <div class="card-text-block">
-          <div class="card-mini-btn"></div>
-          <p class="card-description">
-            The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow. The five boxing wizards jump quickly. Pack my box with five dozen liquor jugs.
-          </p>
-          <p class="card-description">
-            The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow. The five boxing wizards jump quickly. Pack my box with five dozen liquor jugs.
-          </p>
-        </div>
-
-        <div class="card-widget-blue">
-          <div class="widget-title">wishlist</div>
-          <button class="widget-support-btn">support</button>
-        </div>
+      <div class="card-widget-blue">
+        <div class="widget-title">wishlist</div>
+        <button class="widget-support-btn">support</button>
       </div>
-      
-    </article>
+    </div>
   </div>
+</div>
 
 
   <!-- ==========================================
