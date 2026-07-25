@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IRRAREBOY</title>
+  <title>IRRAREBOY (Interactive)</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,81 +15,55 @@
 
   <main class="desktop-canvas">
     
-    <!-- Сайдбар -->
+    <!-- Сайдбар (остается без изменений) -->
     <aside class="sidebar">
-      <!-- Контейнер для манекена -->
       <div class="mannequin-wrapper">
         <img src="mannequin.png" alt="Mannequin" class="mannequin-img">
       </div>
-      
       <h1 class="brand-title">IRRAREBOY<span class="dot">.</span></h1>
-      
-      <!-- Верхний ряд 4 маленьких кнопок -->
       <div class="social-row-small">
         <a href="#" class="btn-small"></a>
         <a href="#" class="btn-small"></a>
         <a href="#" class="btn-small"></a>
         <a href="#" class="btn-small"></a>
       </div>
-
-      <!-- Нижний ряд 2 длинных кнопок -->
       <div class="social-row-large">
         <a href="#" class="btn-large"></a>
         <a href="#" class="btn-large"></a>
       </div>
     </aside>
 
-    <!-- Секция скролла -->
+    <!-- Секция скролла с обычными карточками -->
     <section class="content-slider" id="slider">
-      <div class="cards-grid">
+      <div class="cards-grid js-cards-grid">
     
-        <!-- РАСКРЫТАЯ КАРТОЧКА (EXPANDED) -->
-        <article class="card card-expanded">
-          <div class="card-header-green">
-            <span class="card-header-title">Design inside</span>
-            <span class="card-arrow-close">↗</span>
-          </div>
-
-          <div class="card-body-content">
-            <div class="card-text-block">
-              <div class="card-mini-btn"></div>
-              <p class="card-description">
-                The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow. The five boxing wizards jump quickly. Pack my box with five dozen liquor jugs.
-              </p>
-              <p class="card-description">
-                The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow. The five boxing wizards jump quickly. Pack my box with five dozen liquor jugs.
-              </p>
-            </div>
-
-            <div class="card-widget-blue">
-              <div class="widget-title">wishlist</div>
-              <button class="widget-support-btn">support</button>
-            </div>
-          </div>
+        <!-- ВСЕ КАРТОЧКИ ТЕПЕРЬ ОБЫЧНЫЕ И С КЛАССОМ js-card -->
+        <article class="card js-card" data-topic="design-1">
+          <span class="card-title">Design inside 1</span>
+          <span class="card-arrow">↘</span>
         </article>
 
-        <!-- ОБЫЧНЫЕ КАРТОЧКИ -->
-        <article class="card">
+        <article class="card js-card" data-topic="strochki">
           <span class="card-title">This is type of strochki that need this</span>
           <span class="card-arrow">↘</span>
         </article>
 
-        <article class="card">
+        <article class="card js-card" data-topic="design-3">
           <span class="card-title">Design inside 3</span>
           <span class="card-arrow">↘</span>
         </article>
 
-        <article class="card">
+        <article class="card js-card" data-topic="design-4">
           <span class="card-title">Design inside 4</span>
           <span class="card-arrow">↘</span>
         </article>
 
-        <article class="card">
+        <article class="card js-card" data-topic="design-5">
           <span class="card-title">Design inside 5</span>
           <span class="card-arrow">↘</span>
         </article>
 
-        <article class="card">
+        <article class="card js-card" data-topic="design-6">
           <span class="card-title">Design inside 6</span>
           <span class="card-arrow">↘</span>
         </article>
@@ -99,26 +73,43 @@
 
   </main>
 
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    
-    // --- ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ КОЛЕСОМ ---
-    const slider = document.querySelector('.content-slider');
+  <!-- ==========================================
+       ШАБЛОН РАСКРЫТОЙ КАРТОЧКИ (Скрыт по умолчанию)
+       ========================================== -->
+  <div class="expanded-overlay js-expanded-overlay">
+    <article class="card-expanded js-card-expanded">
+      
+      <div class="card-header-green">
+        <!-- JS будет подставлять сюда заголовок из мелкой карточки -->
+        <span class="card-header-title js-expanded-title">Design inside</span>
+        <span class="card-arrow-close js-close-expanded">↗</span>
+      </div>
 
-    if (slider) {
-      slider.addEventListener('wheel', (e) => {
-        if (e.deltaY !== 0) {
-          e.preventDefault();
-          slider.scrollBy({
-            left: e.deltaY * 1.5,
-            behavior: 'auto'
-          });
-        }
-      }, { passive: false });
-    }
+      <div class="card-body-content">
+        <div class="card-text-block">
+          <div class="card-mini-btn"></div>
+          <p class="card-description">
+            The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow. The five boxing wizards jump quickly. Pack my box with five dozen liquor jugs.
+          </p>
+          <p class="card-description">
+            The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow. The five boxing wizards jump quickly. Pack my box with five dozen liquor jugs.
+          </p>
+        </div>
 
-  });
-</script>
+        <div class="card-widget-blue">
+          <div class="widget-title">wishlist</div>
+          <button class="widget-support-btn">support</button>
+        </div>
+      </div>
+      
+    </article>
+  </div>
+
+
+  <!-- ==========================================
+       ЛОГИКА ВЗАИМОДЕЙСТВИЯ (JavaScript)
+       ========================================== -->
+  <script src="script.js"></script>
   
 </body>
 </html>
