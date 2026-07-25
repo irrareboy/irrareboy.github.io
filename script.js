@@ -4,30 +4,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const expandedCard = document.querySelector('.card-expanded');
   const closeBtn = document.querySelector('.card-arrow-close');
 
-  // 1. НАДЕЖНАЯ ПРОКРУТКА КОЛЕСИКОМ
+  // 1. ПРОКРУТКА КОЛЕСОМ (ДЛЯ ПК)
   if (slider) {
     slider.addEventListener('wheel', (e) => {
-      // Предотвращаем стандартный скролл страницы
       e.preventDefault();
-      
-      // Направление прокрутки (deltaY — вертикальное колесико)
       const moveDistance = e.deltaY !== 0 ? e.deltaY : e.deltaX;
-      
-      // Плавно смещаем скролл слайдера
       slider.scrollLeft += moveDistance * 1.2;
     }, { passive: false });
   }
 
-  // 2. РАСКРЫТИЕ ПЛИТКИ НА МЕСТЕ КЛИКА
+  // 2. ОТКРЫТИЕ КАРТОЧКИ
   cards.forEach(card => {
     card.addEventListener('click', () => {
       if (expandedCard) {
-        // Проверяем, десктоп ли это (ширина экрана больше 1000px)
         if (window.innerWidth > 1000) {
+          // На десктопе ставим на место конкретной плитки
           const cardOffsetLeft = card.offsetLeft;
           expandedCard.style.left = `${cardOffsetLeft}px`;
         } else {
-          // На мобилке сбрасываем инлайновый left, чтобы работал CSS fixed
+          // На мобилке ПОЛНОСТЬЮ очищаем инлайновый left, чтобы работал CSS left: 50%
           expandedCard.style.left = '';
         }
         
@@ -36,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 3. ЗАКРЫТИЕ ПЛИТКИ
+  // 3. ЗАКРЫТИЕ КАРТОЧКИ
   if (closeBtn && expandedCard) {
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
