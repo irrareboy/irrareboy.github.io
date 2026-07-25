@@ -15,7 +15,7 @@
 
   <main class="desktop-canvas">
     
-    <!-- Сайдбар (остается без изменений) -->
+    <!-- Сайдбар -->
     <aside class="sidebar">
       <div class="mannequin-wrapper">
         <img src="mannequin.png" alt="Mannequin" class="mannequin-img">
@@ -33,11 +33,31 @@
       </div>
     </aside>
 
-    <!-- Секция скролла с обычными карточками -->
+    <!-- Секция скролла с галереей -->
     <section class="content-slider" id="slider">
       <div class="cards-grid js-cards-grid">
-    
-        <!-- ВСЕ КАРТОЧКИ ТЕПЕРЬ ОБЫЧНЫЕ И С КЛАССОМ js-card -->
+        
+        <!-- РАСКРЫТАЯ КАРТОЧКА ТЕПЕРЬ ЖИВЕТ ВНУТРИ СЕТКИ -->
+        <div class="card-expanded">
+          <div class="card-header-green">
+            <div class="card-header-title">Design inside</div>
+            <div class="card-arrow-close">↗</div>
+          </div>
+          <div class="card-body-content">
+            <div class="card-text-block">
+              <div class="card-mini-btn"></div>
+              <p class="card-description">
+                The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow. The five boxing wizards jump quickly. Pack my box with five dozen liquor jugs.
+              </p>
+            </div>
+            <div class="card-widget-blue">
+              <div class="widget-title">wishlist</div>
+              <button class="widget-support-btn">support</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ОБЫЧНЫЕ КАРТОЧКИ (Класс card добавлен к каждой) -->
         <article class="card js-card" data-topic="design-1">
           <span class="card-title">Design inside 1</span>
           <span class="card-arrow">↘</span>
@@ -73,32 +93,7 @@
 
   </main>
 
- <!-- Оверлей для всплывающей карточки -->
-<div class="expanded-overlay">
-  <div class="card-expanded">
-    <div class="card-header-green">
-      <div class="card-header-title">Design inside</div>
-      <div class="card-arrow-close">✕</div>
-    </div>
-    <div class="card-body-content">
-      <div class="card-text-block">
-        <div class="card-mini-btn"></div>
-        <p class="card-description">
-          The quick brown fox jumps over the lazy dog. Sphinx of black quartz, judge my vow...
-        </p>
-      </div>
-      <div class="card-widget-blue">
-        <div class="widget-title">wishlist</div>
-        <button class="widget-support-btn">support</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-  <!-- ==========================================
-       ЛОГИКА ВЗАИМОДЕЙСТВИЯ (JavaScript)
-       ========================================== -->
+  <!-- Логика взаимодействия -->
   <script src="script.js"></script>
   
 </body>
