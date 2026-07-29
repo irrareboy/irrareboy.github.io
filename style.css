@@ -120,35 +120,28 @@ body {
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
 
-  /* Базовая маска и плавность её изменения */
+  /* Размытие краев слева и справа */
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0px,
-    black 16px,
-    black calc(100% - 32px),
+    black 40px,
+    black calc(100% - 40px),
     transparent 100%
   );
   mask-image: linear-gradient(
     to right,
     transparent 0px,
-    black 16px,
-    black calc(100% - 32px),
+    black 40px,
+    black calc(100% - 40px),
     transparent 100%
   );
 
   transition: width 0.35s ease, max-width 0.35s ease, -webkit-mask-image 0.35s ease, mask-image 0.35s ease;
 }
 
-/* При открытии карточки */
-.content-slider.is-locked {
-  overflow: hidden !important;
-  -webkit-mask-image: linear-gradient(to right, black 0%, black 100%) !important;
-  mask-image: linear-gradient(to right, black 0%, black 100%) !important;
-}
-
 /* Плавное исчезновение обычных карточек при открытии раскрытой */
 .content-slider.is-locked .card {
-  opacity: 0;
+  opacity: 0.2;
   pointer-events: none;
 }
 
@@ -160,7 +153,7 @@ body {
   grid-auto-columns: 410px;
   gap: 24px;
   width: max-content;
-  padding: 0 24px;
+  padding: 0 40px; /* Отступ слева и справа, чтобы плитки не магнитили вплотную */
   transition: opacity 0.3s ease;
 }
 
@@ -208,28 +201,29 @@ body {
 }
 
 /* ==========================================
-   РАСКРЫТАЯ ПЛИТКА (ВНУТРИ СЕТКИ)
+   РАСКРЫТАЯ ПЛИТКА (ПО ВЕСЬ ЭКРАН / FIXED)
    ========================================== */
 
 .card-expanded {
   display: flex;
-  position: absolute;
-  top: 0;
-  left: 24px;
-  z-index: 100;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 99999;
   
   width: 844px;
-  height: 844px;
+  max-width: calc(100vw - 40px);
+  max-height: calc(100vh - 40px);
   background: #DBCF97;
   border-radius: 32px;
   flex-direction: column;
-  overflow: hidden;
-  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 
-  /* Анимация открывания/закрывания (плавный scale и fade) */
+  /* Анимация открывания/закрывания относительно центра экрана */
   opacity: 0;
   visibility: hidden;
-  transform: scale(0.95);
+  transform: translate(-50%, -50%) scale(0.95);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
 }
@@ -237,7 +231,7 @@ body {
 .card-expanded.is-expanded {
   opacity: 1;
   visibility: visible;
-  transform: scale(1);
+  transform: translate(-50%, -50%) scale(1);
   pointer-events: auto;
 }
 
@@ -341,7 +335,7 @@ body {
   }
   
   .card-expanded {
-    width: 410px;
+    width: 450px;
   }
 
   .card-body-content {
@@ -414,24 +408,27 @@ body {
     border-radius: 24px;
   }
 
+  /* Галерея: ширина карточки (309px) + по 40px с каждой стороны = 389px */
   .content-slider {
-    width: 100vw;
+    width: min(389px, calc(100vw - 32px));
     height: 360px;
     padding: 20px 0;
+    margin: 0 auto;
     overflow-x: auto !important;
 
+    /* Маска размытия 40px слева и справа */
     -webkit-mask-image: linear-gradient(
       to right,
       transparent 0px,
-      black 32px,
-      black calc(100% - 32px),
+      black 40px,
+      black calc(100% - 40px),
       transparent 100%
     );
     mask-image: linear-gradient(
       to right,
       transparent 0px,
-      black 32px,
-      black calc(100% - 32px),
+      black 40px,
+      black calc(100% - 40px),
       transparent 100%
     );
   }
@@ -441,7 +438,7 @@ body {
     flex-direction: row !important;
     gap: 16px;
     width: max-content;
-    padding: 0 calc((100vw - 309px) / 2);
+    padding: 0 40px; /* Совпадает с маской для центрирования карточек */
   }
 
   .card {
@@ -460,25 +457,12 @@ body {
 
   /* Раскрытая карточка на мобилке */
   .card-expanded.is-expanded {
-    position: fixed !important;
-    left: 50% !important;
-    transform: translateX(-50%) scale(1) !important;
     width: 309px !important;
     max-width: calc(100vw - 32px) !important;
-    top: 260px !important;
-    bottom: 25px !important;
     height: auto !important;
-    z-index: 999999 !important;
-    margin: 0 !important;
+    max-height: 85vh !important;
     border-radius: 32px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
-    overflow-y: auto;
-  }
-
-  .content-slider.is-locked {
-    width: 309px !important;
-    max-width: calc(100vw - 32px) !important;
-    margin: 0 auto;
   }
 
   /* Адаптация внутреннего контента мобильной карточки */
