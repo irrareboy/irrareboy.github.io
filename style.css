@@ -201,15 +201,17 @@ body {
 }
 
 /* ==========================================
-   РАСКРЫТАЯ ПЛИТКА (ПО ВЕСЬ ЭКРАН / FIXED)
+   РАСКРЫТАЯ ПЛИТКА (ЕДИНЫЙ FIXED ДЛЯ ДЕСКТОПА И ПЛАНШЕТОВ)
    ========================================== */
 
 .card-expanded {
   display: flex;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 99999;
+  position: fixed !important;
+  /* Жёстко привязываем к окну браузера */
+  top: 50vh !important;
+  left: 50vw !important;
+  transform: translate(-50%, -50%) scale(0.95);
+  z-index: 999999 !important;
   
   width: 844px;
   max-width: calc(100vw - 40px);
@@ -220,19 +222,18 @@ body {
   overflow-y: auto;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
 
-  /* Анимация открывания/закрывания относительно центра экрана */
+  /* Анимация открывания/закрывания */
   opacity: 0;
   visibility: hidden;
-  transform: translate(-50%, -50%) scale(0.95);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
 }
 
 .card-expanded.is-expanded {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, -50%) scale(1);
-  pointer-events: auto;
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translate(-50%, -50%) scale(1) !important;
+  pointer-events: auto !important;
 }
 
 .card-header-green {
@@ -326,6 +327,10 @@ body {
   .desktop-canvas {
     zoom: 0.82;
   }
+  /* Сбрасываем zoom для раскрытой карточки, чтобы она позиционировалась по реальному экрану */
+  .card-expanded {
+    zoom: 1 !important;
+  }
 }
 
 /* --- ПЛАНШЕТЫ И УЗКИЕ ЭКРАНЫ --- */
@@ -336,6 +341,7 @@ body {
   
   .card-expanded {
     width: 450px;
+    max-height: 85vh !important;
   }
 
   .card-body-content {
