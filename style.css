@@ -15,6 +15,11 @@ body {
   padding: 40px 20px;
 }
 
+/* БЛОКИРОВКА СКРОЛЛА: Вставляем сюда для работы JS (document.body.classList.add('has-open-card')) */
+body.has-open-card {
+  overflow: hidden !important;
+}
+
 /* Главный контейнер-холст */
 .desktop-canvas {
   position: relative;
@@ -139,7 +144,7 @@ body {
   transition: width 0.35s ease, max-width 0.35s ease, -webkit-mask-image 0.35s ease, mask-image 0.35s ease;
 }
 
-/* При открытой карточке снимаем размытие и обрезку со слайдера */
+/* При открытой карточке полностью отключаем обрезку, маску и scroll-snap у слайдера */
 .content-slider.is-locked {
   overflow: visible !important;
   scroll-snap-type: none !important;
@@ -208,32 +213,31 @@ body {
 }
 
 /* ==========================================
-   РАСКРЫТАЯ ПЛИТКА (ЕДИНЫЙ FIXED ДЛЯ ДЕСКТОПА И ПЛАНШЕТОВ)
+   РАСКРЫТАЯ ПЛИТКА (ДЕСКТОП И ПЛАНШЕТ)
    ========================================== */
 
 .card-expanded {
   display: flex;
   position: fixed;
-  /* Центрируем относительно окна браузера, но ограничиваем шириной слайдера */
+  /* Центрируем ровно по центру экрана */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
   z-index: 999999;
   
-  width: 844px;  /* 410px + 24px + 410px */
+  width: 844px;  /* Точно 2 плитки по 410px + 24px gap */
   max-width: calc(100vw - 40px);
-  height: 844px; /* 410px + 24px + 410px */
+  height: 844px; /* Точно 2 плитки по 410px + 24px gap */
   max-height: calc(100vh - 40px);
   background: #DBCF97;
   border-radius: 32px;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
 
   /* Анимация появления */
   opacity: 0;
   visibility: hidden;
-  transform: scale(0.96);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
 }
@@ -336,13 +340,13 @@ body {
   .desktop-canvas {
     zoom: 0.82;
   }
-  /* Сбрасываем zoom для раскрытой карточки, чтобы она позиционировалась по реальному экрану */
+  /* Сбрасываем zoom для раскрытой карточки, чтобы fixed не смещался */
   .card-expanded {
     zoom: 1 !important;
   }
 }
 
-/* --- ПЛАНШЕТЫ И УЗКИЕ ЭКРАНЫ --- */
+/* --- ПЛАНШЕТЫ И УЗКИЕ ЭКРАНЫ («2 на 1») --- */
 @media (max-width: 1350px) {
   .content-slider {
     width: 480px;
@@ -351,7 +355,8 @@ body {
   .card-expanded {
     width: 410px !important;
     height: auto !important;
-    left: 85hv !important;
+    max-height: 85vh !important;
+    left: 50% !important; /* ИСПРАВЛЕНА ОПЕЧАТКА (было 85hv) */
   }
 
   .card-body-content {
@@ -425,7 +430,6 @@ body {
     border-radius: 24px;
   }
 
-  /* Галерея: ширина карточки (309px) + по 40px с каждой стороны = 389px */
   .content-slider {
     width: min(389px, calc(100vw - 32px));
     height: 360px;
@@ -433,7 +437,6 @@ body {
     margin: 0 auto;
     overflow-x: auto !important;
 
-    /* Маска размытия 40px слева и справа */
     -webkit-mask-image: linear-gradient(
       to right,
       transparent 0px,
@@ -449,19 +452,19 @@ body {
       transparent 100%
     );
   }
-    /* При открытой карточке полностью отключаем обрезку у слайдера, 
-   чтобы fixed-карточка вырвалась на весь экран */
+
   .content-slider.is-locked {
     overflow: hidden !important;
     -webkit-mask-image: none !important;
     mask-image: none !important;
   }
+
   .cards-grid {
     display: flex !important;
     flex-direction: row !important;
     gap: 16px;
     width: max-content;
-    padding: 0 40px; /* Совпадает с маской для центрирования карточек */
+    padding: 0 40px;
   }
 
   .card {
@@ -478,10 +481,8 @@ body {
     line-height: 36px;
   }
   
-  /* Раскрытая карточка на мобилке - ИСПРАВЛЕНО ДЛЯ ЦЕНТРОВКИ */
   .card-expanded.is-expanded {
     position: fixed !important;
-    /* Явно привязываем к границам экрана */
     top: 50% !important;
     left: 50% !important;
     transform: translate(-50%, -50%) !important;
@@ -501,12 +502,11 @@ body {
     flex-direction: column !important;
   }
 
-  /* Адаптация внутреннего контента мобильной карточки */
   .card-header-green {
     height: auto !important;
     min-height: 120px;
     padding: 20px !important;
-    flex-shrink: 0 !important; /* Зелёный шапка не должна плющиться */
+    flex-shrink: 0 !important;
   }
 
   .card-header-title {
