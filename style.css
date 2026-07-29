@@ -139,7 +139,13 @@ body {
   transition: width 0.35s ease, max-width 0.35s ease, -webkit-mask-image 0.35s ease, mask-image 0.35s ease;
 }
 
-/* Плавное исчезновение обычных карточек при открытии раскрытой */
+/* При открытой карточке снимаем размытие и обрезку со слайдера */
+.content-slider.is-locked {
+  overflow: visible !important;
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+}
+
 .content-slider.is-locked .card {
   opacity: 0.2;
   pointer-events: none;
@@ -206,25 +212,23 @@ body {
 
 .card-expanded {
   display: flex;
-  position: fixed !important;
-  /* Жёстко привязываем к окну браузера */
-  top: 50vh !important;
-  left: 50vw !important;
-  transform: translate(-50%, -50%) scale(0.95);
-  z-index: 999999 !important;
+  position: absolute; /* Позиционируем относительно .cards-grid */
+  top: 0;
+  left: 40px; /* Совпадает с padding-left у .cards-grid, чтобы вставать ровно поверх первых двух колонок */
+  z-index: 1000;
   
-  width: 844px;
-  max-width: calc(100vw - 40px);
-  max-height: calc(100vh - 40px);
+  width: 844px;  /* 410px + 24px + 410px */
+  height: 844px; /* 410px + 24px + 410px */
   background: #DBCF97;
   border-radius: 32px;
   flex-direction: column;
-  overflow-y: auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 
-  /* Анимация открывания/закрывания */
+  /* Анимация появления */
   opacity: 0;
   visibility: hidden;
+  transform: scale(0.96);
   pointer-events: none;
   transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
 }
@@ -232,7 +236,7 @@ body {
 .card-expanded.is-expanded {
   opacity: 1 !important;
   visibility: visible !important;
-  transform: translate(-50%, -50%) scale(1) !important;
+  transform: scale(1) !important;
   pointer-events: auto !important;
 }
 
@@ -340,8 +344,9 @@ body {
   }
   
   .card-expanded {
-    width: 450px;
-    max-height: 85vh !important;
+    width: 410px !important;
+    height: 844px !important;
+    left: 40px !important;
   }
 
   .card-body-content {
