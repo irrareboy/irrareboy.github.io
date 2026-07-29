@@ -474,6 +474,16 @@ body {
     overflow-y: auto;
   }
 
+  /* 2. Прячем фоновые плитки при открытой карточке */
+  .content-slider.is-locked .cards-grid {
+    opacity: 0; /* Делаем фоновые плитки полностью invisible, пока карточка открыта */
+    transition: opacity 0.2s ease;
+  }
+  
+  .cards-grid {
+    transition: opacity 0.2s ease;
+  }
+  
   /* Отключаем маску размытия слайдера, когда плашка открыта */
   .content-slider:has(.is-expanded) {
     -webkit-mask-image: none !important;
