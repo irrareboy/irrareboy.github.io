@@ -123,6 +123,9 @@ body {
   overflow-y: hidden;
   scroll-snap-type: x mandatory; /* Магниты для ПК */
   scroll-behavior: smooth;
+
+  /* Добавляем плавный переход для изменения ширины и маски */
+  transition: width 0.3s ease, max-width 0.3s ease;
   
   -webkit-mask-image: linear-gradient(
     to right,
@@ -141,8 +144,8 @@ body {
 }
 
 .content-slider.is-locked {
+  width: 844px !important;
   overflow-x: hidden !important;
-  width: 900px !important;
   -webkit-mask-image: none !important;
   mask-image: none !important;
 }
@@ -406,6 +409,7 @@ body {
     overflow-x: auto !important; /* Разрешаем скролл */
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
+    transition: width 0.3s ease, max-width 0.3s ease; /* Плавное сужение */
 
     /* Маска: ровно под ширину 1 плитки + gap с красивым мягким размытием по бокам */
     -webkit-mask-image: linear-gradient(
@@ -423,7 +427,6 @@ body {
       transparent 100%
     );
   }
-
   .cards-grid {
     display: flex !important;
     flex-direction: row !important;
@@ -474,9 +477,19 @@ body {
     overflow-y: auto;
   }
 
-  /* 2. Прячем фоновые плитки при открытой карточке */
-  .content-slider.is-locked .cards-grid {
-    opacity: 0; /* Делаем фоновые плитки полностью invisible, пока карточка открыта */
+  /* Когда карточка открывается — сужаем слайдер до ширины 1 плитки */
+  .content-slider.is-locked {
+    width: 309px !important;
+    max-width: calc(100vw - 32px) !important;
+    margin: 0 auto; /* Центрируем сжатый контейнер */
+    overflow: hidden !important;
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
+  }
+
+  /* Прячем соседей, если они всё ещё вылезают из-за gap */
+  .content-slider.is-locked .card:not(.card-expanded) {
+    opacity: 0;
     transition: opacity 0.2s ease;
   }
   
