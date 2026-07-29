@@ -79,37 +79,34 @@ body {
   margin-left: -0.1em;
 }
 
-.social-row-small {
-  display: flex;
-  gap: 18px;
-  margin-bottom: 16px;
-}
-
-.btn-small {
-  display: block;
-  width: 85px;
-  height: 85px;
-  flex-shrink: 0;
-  background: rgba(81, 61, 212, 0.6);
-  border-radius: 32px;
-  cursor: pointer;
-  transition: background-color 0.25s ease, transform 0.1s ease;
-}
-
+.social-row-small,
 .social-row-large {
   display: flex;
   gap: 18px;
 }
 
+.social-row-small {
+  margin-bottom: 16px;
+}
+
+.btn-small,
 .btn-large {
   display: block;
-  width: 188px;
-  height: 85px;
   flex-shrink: 0;
   background: rgba(81, 61, 212, 0.6);
   border-radius: 32px;
   cursor: pointer;
   transition: background-color 0.25s ease, transform 0.1s ease;
+}
+
+.btn-small {
+  width: 85px;
+  height: 85px;
+}
+
+.btn-large {
+  width: 188px;
+  height: 85px;
 }
 
 /* --- СЛАЙДЕР С КАРТОЧКАМИ --- */
@@ -117,13 +114,13 @@ body {
   width: 920px;
   max-width: 100%;
   height: 900px;
-  padding-top: 28px; /* Запас для тени сверху */
-  padding-bottom: 28px; /* Запас для тени снизу */
+  padding: 28px 0; /* Запас под тени сверху и снизу */
   overflow-x: auto;
   overflow-y: hidden;
-  scroll-snap-type: x mandatory; /* Магниты для ПК */
+  scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  
+
+  /* Базовая маска и плавность её изменения */
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0px,
@@ -139,28 +136,24 @@ body {
     transparent 100%
   );
 
-    /* Добавляем плавный переход для изменения ширины и маски */
-  transition: width 0.3s ease, max-width 0.3s ease;
+  transition: width 0.35s ease, max-width 0.35s ease, -webkit-mask-image 0.35s ease, mask-image 0.35s ease;
 }
 
-/* При открытии карточки на 2х2 */
+/* При открытии карточки */
 .content-slider.is-locked {
   overflow: hidden !important;
-  
-  /* Плавное исчезновение краев маски (делаем всё поле черным/видимым) */
   -webkit-mask-image: linear-gradient(to right, black 0%, black 100%) !important;
   mask-image: linear-gradient(to right, black 0%, black 100%) !important;
 }
 
-/* Плавное исчезновение неактивных карточек, чтобы они не мешали */
+/* Плавное исчезновение обычных карточек при открытии раскрытой */
 .content-slider.is-locked .card {
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.25s ease;
 }
 
 .cards-grid {
-  position: relative; /* Чтобы раскрытая плашка позиционировалась строго внутри галереи */
+  position: relative;
   display: grid;
   grid-template-rows: repeat(2, 410px);
   grid-auto-flow: column;
@@ -168,6 +161,7 @@ body {
   gap: 24px;
   width: max-content;
   padding: 0 24px;
+  transition: opacity 0.3s ease;
 }
 
 .card {
@@ -181,8 +175,8 @@ body {
   align-items: flex-end;
   flex-shrink: 0;
   cursor: pointer;
-  scroll-snap-align: start; /* Каждая колонка прилипает ровно по краю */
-  transition: background-color 0.25s ease, transform 0.1s ease;
+  scroll-snap-align: start;
+  transition: opacity 0.3s ease, background-color 0.25s ease, transform 0.1s ease;
 }
 
 .card-title {
@@ -218,23 +212,33 @@ body {
    ========================================== */
 
 .card-expanded {
-  display: none;
+  display: flex;
   position: absolute;
   top: 0;
   left: 24px;
   z-index: 100;
   
-  width: 844px;  /* Ровно 2 колонки: 410 + 24 + 410 */
-  height: 844px; /* Ровно 2 строки: 410 + 24 + 410 */
+  width: 844px;
+  height: 844px;
   background: #DBCF97;
   border-radius: 32px;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 20 20px 20px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 20px 20px rgba(0, 0, 0, 0.25);
+
+  /* Анимация открывания/закрывания (плавный scale и fade) */
+  opacity: 0;
+  visibility: hidden;
+  transform: scale(0.95);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s ease;
 }
 
 .card-expanded.is-expanded {
-  display: flex;
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  pointer-events: auto;
 }
 
 .card-header-green {
@@ -336,13 +340,6 @@ body {
     width: 480px;
   }
   
-.content-slider.is-locked {
-    /* Не меняем width у slider! Держим макет на месте */
-    overflow: hidden !important;
-    -webkit-mask-image: linear-gradient(to right, black 0%, black 100%) !important;
-    mask-image: linear-gradient(to right, black 0%, black 100%) !important;
-  }
-  
   .card-expanded {
     width: 410px;
   }
@@ -369,7 +366,6 @@ body {
     align-items: center;
     gap: 24px;
     width: 100%;
-    position: relative;
   }
 
   .sidebar {
@@ -422,12 +418,8 @@ body {
     width: 100vw;
     height: 360px;
     padding: 20px 0;
-    overflow-x: auto !important; /* Разрешаем скролл */
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    transition: width 0.3s ease, max-width 0.3s ease; /* Плавное сужение */
+    overflow-x: auto !important;
 
-    /* Маска: ровно под ширину 1 плитки + gap с красивым мягким размытием по бокам */
     -webkit-mask-image: linear-gradient(
       to right,
       transparent 0px,
@@ -442,22 +434,21 @@ body {
       black calc(100% - 32px),
       transparent 100%
     );
-    
-    transition: width 0.3s ease, max-width 0.3s ease; /* Плавное сужение */
   }
+
   .cards-grid {
     display: flex !important;
     flex-direction: row !important;
     gap: 16px;
     width: max-content;
-    padding: 0 calc((100vw - 309px) / 2); /* Центрирует первую и последнюю плитки */
+    padding: 0 calc((100vw - 309px) / 2);
   }
 
   .card {
     width: 309px;
     height: 312px;
     padding: 24px;
-    scroll-snap-align: center; /* Центрирует активную карточку */
+    scroll-snap-align: center;
     scroll-snap-stop: always;
   }
 
@@ -467,27 +458,16 @@ body {
     line-height: 36px;
   }
 
-  /* 3. Ограничиваем открытую карточку по высоте галереи */
+  /* Раскрытая карточка на мобилке */
   .card-expanded.is-expanded {
-    display: flex !important;
     position: fixed !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
+    transform: translateX(-50%) scale(1) !important;
     width: 309px !important;
     max-width: calc(100vw - 32px) !important;
-    
-    /* 
-      1. top: 250px начинается ровно под манекеном (накрывает IRRAREBOY и кнопки).
-      Если нужно чуть выше/ниже к ноги манекена — отрегулируй эти 250px.
-    */
     top: 260px !important;
-    /* 
-      2. bottom: 20px фиксирует НИЖНИЙ КРАЙ карточки ровно там, 
-      где заканчивается галерея слайдера!
-    */
     bottom: 25px !important;
-    height: auto !important; /* Высота посчитается автоматически между top и bottom */
-    
+    height: auto !important;
     z-index: 999999 !important;
     margin: 0 !important;
     border-radius: 32px;
@@ -495,35 +475,13 @@ body {
     overflow-y: auto;
   }
 
-  /* Когда карточка открывается — сужаем слайдер до ширины 1 плитки */
   .content-slider.is-locked {
     width: 309px !important;
     max-width: calc(100vw - 32px) !important;
-    margin: 0 auto; /* Центрируем сжатый контейнер */
-    overflow: hidden !important;
-   /* Плавный уход размытия в полностью жесткие края */
-    -webkit-mask-image: linear-gradient(to right, black 0%, black 100%) !important;
-    mask-image: linear-gradient(to right, black 0%, black 100%) !important;
+    margin: 0 auto;
   }
 
-  /* Прячем соседей, если они всё ещё вылезают из-за gap */
-  .content-slider.is-locked .card:not(.card-expanded) {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-  }
-  
-  .cards-grid {
-    transition: opacity 0.2s ease;
-  }
-  
-  /* Отключаем маску размытия слайдера, когда плашка открыта */
-  .content-slider:has(.is-expanded) {
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-  }
-
-  /* Адаптируем внутренний контент под компактную плашку 309px */
+  /* Адаптация внутреннего контента мобильной карточки */
   .card-header-green {
     height: auto !important;
     min-height: 120px;
