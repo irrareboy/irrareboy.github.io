@@ -435,7 +435,7 @@ body {
     /* При открытой карточке полностью отключаем обрезку у слайдера, 
    чтобы fixed-карточка вырвалась на весь экран */
   .content-slider.is-locked {
-    overflow: visible !important;
+    overflow: hidden !important;
     -webkit-mask-image: none !important;
     mask-image: none !important;
   }
@@ -465,13 +465,13 @@ body {
   .card-expanded.is-expanded {
     position: fixed !important;
     /* Явно привязываем к границам экрана */
-    top: 50px !important;
-    bottom: 30px !important;
+    top: 50% !important;
     left: 50% !important;
-    transform: translateX(-50%) !important;
+    transform: translate(-50%, -50%) !important;
     
     width: 309px !important;
     max-width: calc(100vw - 32px) !important;
+    max-height: 80vh !important;
     height: auto !important;
     
     z-index: 999999 !important;
@@ -479,7 +479,6 @@ body {
     border-radius: 32px !important;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4) !important;
     
-    /* Обязательно разрешаем внутренний скролл */
     overflow-y: auto !important;
     display: flex !important;
     flex-direction: column !important;
