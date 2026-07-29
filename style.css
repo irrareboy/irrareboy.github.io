@@ -454,15 +454,23 @@ body {
     font-size: 28px;
     line-height: 36px;
   }
-
-  /* Раскрытая карточка на мобилке */
+  
+  /* Раскрытая карточка на мобилке - ИСПРАВЛЕНО ДЛЯ ЦЕНТРОВКИ */
   .card-expanded.is-expanded {
+    position: fixed !important;
+    top: 50% !important; /* Смещаем центр карточки в центр экрана */
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(1) !important; /* Идеальная центровка по обеим осям */
     width: 309px !important;
     max-width: calc(100vw - 32px) !important;
     height: auto !important;
-    max-height: 85vh !important;
+    max-height: 85vh !important; /* Ограничиваем высоту, чтобы не вылезала за экран */
+    z-index: 999999 !important;
+    margin: 0 !important;
     border-radius: 32px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    overflow-y: auto; /* Разрешаем скролл внутри карточки, если контент длинный */
+    display: flex !important; /* Убедимся, что она flex */
   }
 
   /* Адаптация внутреннего контента мобильной карточки */
