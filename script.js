@@ -39,26 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 2. ОТКРЫТИЕ КАРТОЧКИ
-  cards.forEach((card, index) => {
+  cards.forEach((card) => {
     card.addEventListener('click', () => {
       if (!expandedCard) return;
 
-      if (window.innerWidth > 1000) {
-        const cardOffsetLeft = card.offsetLeft;
-        const columnIndex = Math.floor(index / 2);
-        const totalColumns = Math.ceil(cards.length / 2);
+      // Сбрасываем любые старые inline-стили left, чтобы работал CSS fixed-центрирование
+      expandedCard.style.left = '';
 
-        // Если это самая последняя колонка — открываем влево
-        if (columnIndex >= totalColumns - 1 && totalColumns > 1) {
-          expandedCard.style.left = `${cardOffsetLeft - 434}px`;
-        } else {
-          expandedCard.style.left = `${cardOffsetLeft}px`;
-        }
-      } else {
-        expandedCard.style.left = '';
-      }
-
+      // Показываем карточку и блокируем слайдер + body
       expandedCard.classList.add('is-expanded');
+      document.body.classList.add('has-open-card');
+      
       if (slider) {
         slider.classList.add('is-locked');
       }
@@ -69,7 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeBtn && expandedCard) {
     closeBtn.addEventListener('click', (e) => {
       e.stopPropagation();
+      
       expandedCard.classList.remove('is-expanded');
+      document.body.classList.remove('has-open-card');
+      
       if (slider) {
         slider.classList.remove('is-locked');
       }
