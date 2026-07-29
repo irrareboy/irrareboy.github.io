@@ -123,9 +123,6 @@ body {
   overflow-y: hidden;
   scroll-snap-type: x mandatory; /* Магниты для ПК */
   scroll-behavior: smooth;
-
-  /* Добавляем плавный переход для изменения ширины и маски */
-  transition: width 0.3s ease, max-width 0.3s ease;
   
   -webkit-mask-image: linear-gradient(
     to right,
@@ -141,13 +138,25 @@ body {
     black calc(100% - 32px),
     transparent 100%
   );
+
+    /* Добавляем плавный переход для изменения ширины и маски */
+  transition: width 0.3s ease, max-width 0.3s ease;
 }
 
+/* При открытии карточки на 2х2 */
 .content-slider.is-locked {
-  width: 844px !important;
-  overflow-x: hidden !important;
-  -webkit-mask-image: none !important;
-  mask-image: none !important;
+  overflow: hidden !important;
+  
+  /* Плавное исчезновение краев маски (делаем всё поле черным/видимым) */
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 100%) !important;
+  mask-image: linear-gradient(to right, black 0%, black 100%) !important;
+}
+
+/* Плавное исчезновение неактивных карточек, чтобы они не мешали */
+.content-slider.is-locked .card {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
 }
 
 .cards-grid {
@@ -326,7 +335,14 @@ body {
   .content-slider {
     width: 480px;
   }
-
+  
+.content-slider.is-locked {
+    /* Не меняем width у slider! Держим макет на месте */
+    overflow: hidden !important;
+    -webkit-mask-image: linear-gradient(to right, black 0%, black 100%) !important;
+    mask-image: linear-gradient(to right, black 0%, black 100%) !important;
+  }
+  
   .card-expanded {
     width: 410px;
   }
@@ -426,6 +442,8 @@ body {
       black calc(100% - 32px),
       transparent 100%
     );
+    
+    transition: width 0.3s ease, max-width 0.3s ease; /* Плавное сужение */
   }
   .cards-grid {
     display: flex !important;
@@ -483,13 +501,15 @@ body {
     max-width: calc(100vw - 32px) !important;
     margin: 0 auto; /* Центрируем сжатый контейнер */
     overflow: hidden !important;
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
+   /* Плавный уход размытия в полностью жесткие края */
+    -webkit-mask-image: linear-gradient(to right, black 0%, black 100%) !important;
+    mask-image: linear-gradient(to right, black 0%, black 100%) !important;
   }
 
   /* Прячем соседей, если они всё ещё вылезают из-за gap */
   .content-slider.is-locked .card:not(.card-expanded) {
     opacity: 0;
+    pointer-events: none;
     transition: opacity 0.2s ease;
   }
   
