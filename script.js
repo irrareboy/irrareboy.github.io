@@ -43,10 +43,20 @@ document.addEventListener('DOMContentLoaded', () => {
     card.addEventListener('click', () => {
       if (!expandedCard) return;
 
-      // Сбрасываем любые старые inline-стили left, чтобы работал CSS fixed-центрирование
-      expandedCard.style.left = '';
+      if (window.innerWidth > 1000 && slider) {
+        // Находим центр видимой области слайдера с учётом текущего скролла
+        const visibleCenterLeft = slider.scrollLeft + (slider.clientWidth / 2);
+        
+        expandedCard.style.position = 'absolute';
+        expandedCard.style.left = `${visibleCenterLeft}px`;
+        expandedCard.style.top = '50%';
+      } else {
+        // На мобилке оставляем fixed по центру экрана
+        expandedCard.style.position = '';
+        expandedCard.style.left = '';
+        expandedCard.style.top = '';
+      }
 
-      // Показываем карточку и блокируем слайдер + body
       expandedCard.classList.add('is-expanded');
       document.body.classList.add('has-open-card');
       
